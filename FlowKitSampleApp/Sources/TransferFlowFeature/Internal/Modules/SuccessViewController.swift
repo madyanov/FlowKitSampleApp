@@ -10,7 +10,8 @@ final class SuccessViewController: UIViewController {
 
         super.init(nibName: nil, bundle: nil)
 
-        self.title = "Success"
+        title = "Success"
+        navigationItem.hidesBackButton = true
     }
 
     required init?(coder: NSCoder) {

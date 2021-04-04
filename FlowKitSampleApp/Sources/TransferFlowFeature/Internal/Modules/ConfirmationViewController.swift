@@ -12,7 +12,7 @@ final class ConfirmationViewController: UIViewController {
 
         super.init(nibName: nil, bundle: nil)
 
-        self.title = "Confirmation"
+        title = "Confirmation"
     }
 
     required init?(coder: NSCoder) {

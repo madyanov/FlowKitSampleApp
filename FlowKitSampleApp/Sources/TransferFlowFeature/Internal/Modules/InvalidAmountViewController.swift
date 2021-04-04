@@ -4,7 +4,7 @@ final class InvalidAmountViewController: UIViewController {
     init() {
         super.init(nibName: nil, bundle: nil)
 
-        self.title = "Invalid Amount"
+        title = "Invalid Amount"
     }
 
     required init?(coder: NSCoder) {
