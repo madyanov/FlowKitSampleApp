@@ -36,3 +36,9 @@
 Проблема протекающих сущностей частично решается промисами, получить значение из которых можно только явно *выполнив* их.
 
 Задача переиспользования флоу решается тем, что само флоу является реализацией `PromiseBuilder`-а, и поэтому может являться шагом в других флоу.
+
+## Примеры
+
+- [Старт и комплишн флоу](https://github.com/madyanov/FlowKitSampleApp/blob/e64bd411351aa18316b5f20d49d2404304cbe9be/FlowKitSampleApp/Sources/AppFeature/App.swift#L35)
+- [Реализация флоу](https://github.com/madyanov/FlowKitSampleApp/blob/e64bd411351aa18316b5f20d49d2404304cbe9be/FlowKitSampleApp/Sources/TransferFlowFeature/Public/TransferFlow.swift)
+- [Реализация нод](https://github.com/madyanov/FlowKitSampleApp/tree/e64bd411351aa18316b5f20d49d2404304cbe9be/FlowKitSampleApp/Sources/TransferFlowFeature/Internal/Nodes)
