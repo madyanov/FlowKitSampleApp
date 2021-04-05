@@ -4,7 +4,7 @@ extension Promise {
             complete {
                 switch $0 {
                 case .success(let value):
-                    `switch`(Switch(input: value)).complete(with: completion)
+                    `switch`(Switch(input: value)).complete(using: completion)
                 case .failure(let error):
                     completion(.failure(error))
                 }

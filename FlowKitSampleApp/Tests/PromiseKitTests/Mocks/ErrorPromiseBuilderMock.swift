@@ -11,4 +11,3 @@ final class ErrorPromiseBuilderMock<Value>: PromiseBuilder {
         return Promise<Value> { $0(.failure(self.error)) }
     }
 }
-

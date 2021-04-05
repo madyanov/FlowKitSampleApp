@@ -11,7 +11,7 @@ public struct TransferFlow: PromiseBuilder {
         return Promise<Transfer> { completion in
             return initialize(with: country)
                 .then(showAmount)
-                .complete(with: completion)
+                .complete(using: completion)
         }
     }
 }
@@ -26,10 +26,9 @@ private extension TransferFlow {
                     .then(CheckAmountNode())
                     .switch {
                         $0
-                            .when({ $0 == .invalid }, then: showInvalidAmount(amountPromise: amountPromise,
-                                                                              countryPromise: countryPromise))
-                            .default(showConfirmation(amountPromise: amountPromise,
-                                                      countryPromise: countryPromise))
+                            .when({ $0 == .invalid },
+                                  then: showInvalidAmount(amountPromise: amountPromise, countryPromise: countryPromise))
+                            .default(showConfirmation(amountPromise: amountPromise, countryPromise: countryPromise))
                     }
             }
             .then(BackToRootNode(dependencies))

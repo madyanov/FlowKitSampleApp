@@ -7,8 +7,8 @@ public struct Finalizer<Value> {
 }
 
 extension Finalizer: Finalizable {
-    public func complete(with completion: @escaping (Result<Value, Error>) -> Void) {
-        promise.complete(with: completion)
+    public func complete(using completion: @escaping (Result<Value, Error>) -> Void) {
+        promise.complete(using: completion)
     }
 
     public func finally<Builder>(_ builder: Builder) where Builder : PromiseBuilder, Builder.Input == Void {

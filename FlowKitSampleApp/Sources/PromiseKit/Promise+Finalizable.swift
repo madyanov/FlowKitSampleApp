@@ -1,5 +1,5 @@
 extension Promise: Finalizable {
-    public func complete(with completion: @escaping (Result<Value, Error>) -> Void) {
+    public func complete(using completion: @escaping (Result<Value, Error>) -> Void) {
         work { completion($0) }
     }
 

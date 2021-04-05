@@ -6,7 +6,7 @@ extension Promise {
             complete {
                 switch $0 {
                 case .success(let value):
-                    builder.build(with: value).complete(with: completion)
+                    builder.build(with: value).complete(using: completion)
                 case .failure(let error):
                     completion(.failure(error))
                 }
@@ -21,7 +21,7 @@ extension Promise {
             complete {
                 switch $0 {
                 case .success:
-                    builder.build().complete(with: completion)
+                    builder.build().complete(using: completion)
                 case .failure(let error):
                     completion(.failure(error))
                 }
@@ -37,7 +37,7 @@ extension Promise {
             complete {
                 switch $0 {
                 case .success:
-                    builder.build().complete(with: completion)
+                    builder.build().complete(using: completion)
                 case .failure(let error):
                     completion(.failure(error))
                 }
