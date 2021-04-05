@@ -34,10 +34,10 @@ public final class App {
         }
 
         firstViewController.tapRussiaButtonHandler =
-            { initialize(with: .russia).then(transferFlow).complete(with: completion) }
+            { initialize(with: .russia).then(transferFlow).complete(using: completion) }
         firstViewController.tapGermanyButtonHandler =
-            { initialize(with: .germany).then(transferFlow).complete(with: completion) }
+            { initialize(with: .germany).then(transferFlow).complete(using: completion) }
         firstViewController.tapFranceButtonHandler =
-            { initialize(with: .france).then(transferFlow).complete(with: completion) }
+            { initialize(with: .france).then(transferFlow).complete(using: completion) }
     }
 }
