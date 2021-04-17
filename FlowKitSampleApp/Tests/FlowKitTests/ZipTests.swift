@@ -1,15 +1,15 @@
 import XCTest
-import PromiseKit
+import FlowKit
 
 final class ZipTests: XCTestCase {
     func testZip2() {
         let expectation = self.expectation(description: "zip2")
 
-        let p1 = Promise<Int> { completion in
+        let p1 = FlowAction<Int> { completion in
             async { completion(.success(42)) }
         }
 
-        let p2 = Promise<Int> { completion in
+        let p2 = FlowAction<Int> { completion in
             async { completion(.success(43)) }
         }
 

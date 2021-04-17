@@ -4,7 +4,7 @@
 
 Не отходя от концепции координаторов флоу, библиотека пытается решить несколько связанных с ними проблем:
 
-- Протекание логики в координатор
+- Протекание логики в координатор, что приводит к распуханию и появлению лишних ответственностей
 - Протекание сущностей в координатор, что приводит к появлению шареного стейта и связанных с ним сайд-эффектов
 - Отсутствие стандартного способа переиспользовать флоу как часть другого флоу
 
@@ -16,29 +16,23 @@
 
 ## Детали реализации
 
-Основными «строительными блоками» флоу являются типы `Promise` и `PromiseBuilder`.
+Основными «строительными блоками» флоу являются типы `FlowAction` и `FlowNode`.
 
-- `Promise` – обычные [промисы](https://en.wikipedia.org/wiki/Futures_and_promises), принимающие `PromiseBuilder`-ы в качестве шагов, и не предоставляющие прямой доступ к своему *значению*.
+- `FlowAction` – обычные [промисы](https://en.wikipedia.org/wiki/Futures_and_promises), принимающие `FlowNode`-ы в качестве шагов, и не предоставляющие прямой доступ к своему *значению*.
 
-- `PromiseBuilder` – абстракция, подобная `(Input) -> Promise<Output>`, но заставляющая выносить свою логику в отдельные сущности, и дающая возможность строить цепочки, где `Input` предыдущего шага связан с `Output`-ом следующего.
+- `FlowNode` – абстракция, подобная `(Input) -> FlowAction<Output>`, но заставляющая выносить свою логику в отдельные сущности, и дающая возможность строить цепочки, где `Input` предыдущего шага связан с `Output`-ом следующего.
 
     ```swift
-    protocol PromiseBuilder {
+    protocol FlowNode {
         associatedtype Input
         associatedtype Output
 
-        func build(with: Input) -> Promise<Output>
+        func makeAction(with: Input) -> FlowAction<Output>
     }
     ```
 
-Проблема протекающей логики решается `PromiseBuilder`-ами, которые инкапсулируют логику шагов.
+Проблема протекающей логики решается `FlowNode`-ами, которые инкапсулируют логику шагов.
 
 Проблема протекающих сущностей частично решается промисами, получить значение из которых можно только явно *выполнив* их.
 
-Задача переиспользования флоу решается тем, что само флоу является реализацией `PromiseBuilder`-а, и поэтому может являться шагом в других флоу.
-
-## Примеры
-
-- [Старт и комплишн флоу](https://github.com/madyanov/FlowKitSampleApp/blob/e64bd411351aa18316b5f20d49d2404304cbe9be/FlowKitSampleApp/Sources/AppFeature/App.swift#L35)
-- [Реализация флоу](https://github.com/madyanov/FlowKitSampleApp/blob/e64bd411351aa18316b5f20d49d2404304cbe9be/FlowKitSampleApp/Sources/TransferFlowFeature/Public/TransferFlow.swift)
-- [Реализация нод](https://github.com/madyanov/FlowKitSampleApp/tree/e64bd411351aa18316b5f20d49d2404304cbe9be/FlowKitSampleApp/Sources/TransferFlowFeature/Internal/Nodes)
+Задача переиспользования флоу решается тем, что само флоу является реализацией `FlowNode`-а, и поэтому может являться шагом в других флоу.

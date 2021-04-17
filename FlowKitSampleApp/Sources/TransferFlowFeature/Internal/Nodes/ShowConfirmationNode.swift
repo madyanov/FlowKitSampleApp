@@ -1,15 +1,15 @@
-import PromiseKit
+import FlowKit
 
-struct ShowConfirmationNode: PromiseBuilder {
-    private let countryPromise: Promise<Country>
+struct ShowConfirmationNode: FlowNode {
+    private let country: FlowAction<Country>
 
-    init(countryPromise: Promise<Country>) {
-        self.countryPromise = countryPromise
+    init(country: FlowAction<Country>) {
+        self.country = country
     }
 
-    func build(with amount: Int) -> Promise<Route> {
-        return Promise<Route> { completion in
-            countryPromise.complete {
+    func makeAction(with amount: Int) -> FlowAction<Route> {
+        return FlowAction<Route> { completion in
+            country.complete {
                 switch $0 {
                 case .success(let country):
                     completion(.success(.confirmation(country: country,

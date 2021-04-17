@@ -1,6 +1,8 @@
-extension Promise {
-    public func `switch`<Output>(_ switch: @escaping (Switch<Value, Output>) -> Promise<Output>) -> Promise<Output> {
-        return Promise<Output> { completion in
+extension FlowAction {
+    public func `switch`<Output>(_ switch: @escaping (Switch<Value, Output>) -> FlowAction<Output>)
+        -> FlowAction<Output> {
+
+        return FlowAction<Output> { completion in
             complete {
                 switch $0 {
                 case .success(let value):

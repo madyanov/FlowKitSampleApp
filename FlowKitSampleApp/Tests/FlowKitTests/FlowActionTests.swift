@@ -1,11 +1,11 @@
 import XCTest
-@testable import PromiseKit
+@testable import FlowKit
 
-final class PromiseTests: XCTestCase {
+final class FlowActionTests: XCTestCase {
     func testSyncComplete() {
         var result: Int?
 
-        Promise { $0(.success(42)) }
+        FlowAction { $0(.success(42)) }
             .complete {
                 switch $0 {
                 case .success(let value):
@@ -22,7 +22,7 @@ final class PromiseTests: XCTestCase {
         let expectation = self.expectation(description: "async then")
         var result: Int?
 
-        Promise { completion in
+        FlowAction { completion in
             Async(expectation) { completion(.success(42)) }
         }
         .complete {

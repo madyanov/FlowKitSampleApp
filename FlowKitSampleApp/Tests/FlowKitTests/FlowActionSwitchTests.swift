@@ -1,22 +1,22 @@
 import XCTest
-@testable import PromiseKit
+@testable import FlowKit
 
-final class PromiseSwitchTests: XCTestCase {
+final class FlowActionSwitchTests: XCTestCase {
     func testSwitch() {
         let expectation = self.expectation(description: "switch")
-        let sumBuilder = SumPromiseBuilderMock()
-        let stringBuilder = StringPromiseBuilderMock<Int>()
+        let sumNode = SumFlowNodeMock()
+        let stringNode = StringFlowNodeMock<Int>()
         var result: String?
 
-        Promise<[Int]> { completion in
+        FlowAction<[Int]> { completion in
             Async(expectation) { completion(.success([3, 4, 5, 6, 7, 8, 9])) }
         }
-        .then(sumBuilder)
+        .then(sumNode)
         .switch {
             $0
-                .when({ $0 < 42 }, then: ErrorPromiseBuilderMock<String>(ErrorMock.someError))
-                .when({ $0 == 42 }, then: stringBuilder)
-                .default(ErrorPromiseBuilderMock<String>(ErrorMock.unknownError))
+                .when({ $0 < 42 }, then: ErrorFlowNodeMock<String>(ErrorMock.someError))
+                .when({ $0 == 42 }, then: stringNode)
+                .default(ErrorFlowNodeMock<String>(ErrorMock.unknownError))
         }
         .complete {
             switch $0 {
@@ -29,8 +29,8 @@ final class PromiseSwitchTests: XCTestCase {
 
         waitForExpectations(timeout: 1) { error in
             XCTAssertNil(error)
-            XCTAssertEqual(sumBuilder.sum, 42)
-            XCTAssertEqual(stringBuilder.string, "42")
+            XCTAssertEqual(sumNode.sum, 42)
+            XCTAssertEqual(stringNode.string, "42")
             XCTAssertEqual(result, "42")
         }
     }

@@ -1,7 +1,7 @@
-import PromiseKit
+import FlowKit
 
-struct ShowAmountNode: PromiseBuilder {
-    func build(with country: Country) -> Promise<Route> {
-        return Promise<Route> { $0(.success(.amount(country: country, completion: { _ in }))) }
+struct ShowAmountNode: FlowNode {
+    func makeAction(with country: Country) -> FlowAction<Route> {
+        return FlowAction<Route> { $0(.success(.amount(country: country, completion: { _ in }))) }
     }
 }

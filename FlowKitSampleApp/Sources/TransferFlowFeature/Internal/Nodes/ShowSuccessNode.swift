@@ -1,7 +1,7 @@
-import PromiseKit
+import FlowKit
 
-struct ShowSuccessNode: PromiseBuilder {
-    func build(with transfer: Transfer) -> Promise<Route> {
-        return Promise<Route> { $0(.success(.success(transfer: transfer, completion: {}))) }
+struct ShowSuccessNode: FlowNode {
+    func makeAction(with transfer: Transfer) -> FlowAction<Route> {
+        return FlowAction<Route> { $0(.success(.success(transfer: transfer, completion: {}))) }
     }
 }

@@ -1,20 +1,20 @@
 import XCTest
-import PromiseKit
+import FlowKit
 
-final class PromiseCatchTests: XCTestCase {
+final class FlowActionCatchTests: XCTestCase {
     func testCatch() {
         let expectation = self.expectation(description: "catch")
-        let builder = VoidPromiseBuilderMock()
+        let node = VoidFlowNodeMock()
 
-        Promise<Void> { completion in
+        FlowAction<Void> { completion in
             Async(expectation) { completion(.failure(ErrorMock.someError)) }
         }
-        .catch { _ in  builder }
+        .catch { _ in  node }
         .execute()
 
         waitForExpectations(timeout: 1) { error in
             XCTAssertNil(error)
-            XCTAssertTrue(builder.promiseExecuted)
+            XCTAssertTrue(node.actionExecuted)
         }
     }
 }

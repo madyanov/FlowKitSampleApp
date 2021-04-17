@@ -1,7 +1,7 @@
 import UIKit
 import NavigationKit
 import TransferFlowFeature
-import PromiseKit
+import FlowKit
 
 public final class App {
     private lazy var window = UIWindow()

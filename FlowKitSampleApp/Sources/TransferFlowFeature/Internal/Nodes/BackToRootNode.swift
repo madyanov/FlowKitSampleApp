@@ -1,19 +1,19 @@
-import PromiseKit
+import FlowKit
 import NavigationKit
 
 protocol BackToRootNodeDependencies {
     var navigator: Navigator<Route, ModuleBuilder> { get }
 }
 
-struct BackToRootNode<Value>: PromiseBuilder {
+struct BackToRootNode<Value>: FlowNode {
     private let dependencies: BackToRootNodeDependencies
 
     init(_ dependencies: BackToRootNodeDependencies) {
         self.dependencies = dependencies
     }
 
-    func build(with value: Value) -> Promise<Value> {
-        return Promise<Value> {
+    func makeAction(with value: Value) -> FlowAction<Value> {
+        return FlowAction<Value> {
             dependencies.navigator.backToRoot()
             $0(.success(value))
         }

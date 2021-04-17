@@ -9,8 +9,8 @@ let package = Package(
     products: [
         // Products define the executables and libraries a package produces, and make them visible to other packages.
         .library(
-            name: "PromiseKit",
-            targets: ["PromiseKit"]),
+            name: "FlowKit",
+            targets: ["FlowKit"]),
         .library(
             name: "NavigationKit",
             targets: ["NavigationKit"]),
@@ -29,19 +29,19 @@ let package = Package(
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .target(
-            name: "PromiseKit",
+            name: "FlowKit",
             dependencies: []),
         .testTarget(
-            name: "PromiseKitTests",
-            dependencies: ["PromiseKit"]),
+            name: "FlowKitTests",
+            dependencies: ["FlowKit"]),
         .target(
             name: "NavigationKit",
             dependencies: []),
         .target(
             name: "AppFeature",
-            dependencies: ["PromiseKit", "NavigationKit", "TransferFlowFeature"]),
+            dependencies: ["FlowKit", "NavigationKit", "TransferFlowFeature"]),
         .target(
             name: "TransferFlowFeature",
-            dependencies: ["PromiseKit", "NavigationKit"]),
+            dependencies: ["FlowKit", "NavigationKit"]),
     ]
 )

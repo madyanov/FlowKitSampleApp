@@ -4,6 +4,7 @@ enum Route {
     case success(transfer: Transfer, completion: () -> Void)
     case invalidAmount
 
+    // don't look
     func overriding<Output>(_ overriden: @escaping (Output) -> Void) -> Route {
         switch self {
         case .amount(let country, let completion):

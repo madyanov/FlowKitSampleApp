@@ -1,7 +1,7 @@
-import PromiseKit
+import FlowKit
 
-struct ShowInvalidAmountNode: PromiseBuilder {
-    func build(with: Void) -> Promise<Route> {
-        return Promise<Route> { $0(.success(.invalidAmount)) }
+struct ShowInvalidAmountNode: FlowNode {
+    func makeAction(with: Void) -> FlowAction<Route> {
+        return FlowAction<Route> { $0(.success(.invalidAmount)) }
     }
 }

@@ -1,26 +1,26 @@
-import PromiseKit
+import FlowKit
 
 protocol CreateTransferNodeDependencies {
     var transfersRepository: TransfersRepository { get }
 }
 
-struct CreateTransferNode: PromiseBuilder {
-    private let countryPromise: Promise<Country>
-    private let amountPromise: Promise<Int>
+struct CreateTransferNode: FlowNode {
+    private let country: FlowAction<Country>
+    private let amount: FlowAction<Int>
     private let dependencies: CreateTransferNodeDependencies
 
     init(_ dependencies: CreateTransferNodeDependencies,
-         countryPromise: Promise<Country>,
-         amountPromise: Promise<Int>) {
+         country: FlowAction<Country>,
+         amount: FlowAction<Int>) {
 
-        self.countryPromise = countryPromise
-        self.amountPromise = amountPromise
+        self.country = country
+        self.amount = amount
         self.dependencies = dependencies
     }
 
-    func build(with: Void) -> Promise<Transfer> {
-        return Promise<Transfer> { completion in
-            zip(countryPromise, amountPromise)
+    func makeAction(with: Void) -> FlowAction<Transfer> {
+        return FlowAction<Transfer> { completion in
+            zip(country, amount)
                 .complete {
                     switch $0 {
                     case .success((let country, let amount)):

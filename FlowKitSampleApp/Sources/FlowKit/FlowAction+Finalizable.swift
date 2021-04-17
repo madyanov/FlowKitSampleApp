@@ -1,10 +1,10 @@
-extension Promise: Finalizable {
+extension FlowAction: Finalizable {
     public func complete(using completion: @escaping (Result<Value, Error>) -> Void) {
         work { completion($0) }
     }
 
-    public func finally<Builder: VoidPromiseBuilder>(_ builder: Builder) {
-        complete { _ in builder.build().execute() }
+    public func finally<Node: VoidFlowNode>(_ node: Node) {
+        complete { _ in node.makeAction().execute() }
     }
 
     public func execute() {

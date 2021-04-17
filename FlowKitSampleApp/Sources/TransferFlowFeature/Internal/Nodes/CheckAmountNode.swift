@@ -1,13 +1,13 @@
-import PromiseKit
+import FlowKit
 
-struct CheckAmountNode: PromiseBuilder {
+struct CheckAmountNode: FlowNode {
     enum Result {
         case valid
         case invalid
     }
 
-    func build(with amount: Int) -> Promise<Result> {
-        return Promise<Result> {
+    func makeAction(with amount: Int) -> FlowAction<Result> {
+        return FlowAction<Result> {
             if amount > 100 {
                 $0(.success(.valid))
             } else {
