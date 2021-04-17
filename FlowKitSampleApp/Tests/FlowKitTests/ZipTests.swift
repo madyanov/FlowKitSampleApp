@@ -2,20 +2,24 @@ import XCTest
 import FlowKit
 
 final class ZipTests: XCTestCase {
-    func testZip2() {
-        let expectation = self.expectation(description: "zip2")
+    func testZip() {
+        let expectation = self.expectation(description: "zip")
 
-        let p1 = FlowAction<Int> { completion in
+        let a1 = FlowAction<Int> { completion in
             async { completion(.success(42)) }
         }
 
-        let p2 = FlowAction<Int> { completion in
+        let a2 = FlowAction<Int> { completion in
             async { completion(.success(43)) }
         }
 
-        var result: (Int, Int)?
+        let a3 = FlowAction<Int> { completion in
+            async { completion(.success(44)) }
+        }
 
-        zip(p1, p2)
+        var result: (Int, Int, Int)?
+
+        zip(a1, a2, a3)
             .complete {
                 switch $0 {
                 case .success(let value):
@@ -31,6 +35,7 @@ final class ZipTests: XCTestCase {
             XCTAssertNil(error)
             XCTAssertEqual(result?.0, 42)
             XCTAssertEqual(result?.1, 43)
+            XCTAssertEqual(result?.2, 44)
         }
     }
 }
