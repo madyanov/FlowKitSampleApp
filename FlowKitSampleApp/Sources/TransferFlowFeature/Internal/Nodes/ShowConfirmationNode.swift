@@ -19,10 +19,9 @@ struct ShowConfirmationNode: FlowNode {
             country.complete {
                 switch $0 {
                 case .success(let country):
-                    let route = Route.confirmation(country: country,
-                                                   amount: amount,
-                                                   completion: { completion(.success(())) })
-                    dependencies.navigator.forward(to: route)
+                    dependencies.navigator.forward(to: .confirmation(country: country,
+                                                                     amount: amount,
+                                                                     completion: { completion(.success(())) }))
                 case .failure(let error):
                     completion(.failure(error))
                 }

@@ -14,8 +14,8 @@ struct ShowSuccessNode: FlowNode {
 
     func makeAction(with transfer: Transfer) -> FlowAction<Void> {
         return FlowAction<Void> { completion in
-            let route = Route.success(transfer: transfer, completion: { completion(.success(())) })
-            dependencies.navigator.forward(to: route)
+            dependencies.navigator.forward(to: .success(transfer: transfer,
+                                                        completion: { completion(.success(())) }))
         }
     }
 }

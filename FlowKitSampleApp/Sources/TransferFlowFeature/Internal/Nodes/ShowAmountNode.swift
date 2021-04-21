@@ -14,8 +14,8 @@ struct ShowAmountNode: FlowNode {
 
     func makeAction(with country: Country) -> FlowAction<Int> {
         return FlowAction<Int> { completion in
-            let route = Route.amount(country: country, completion: { completion(.success($0)) })
-            dependencies.navigator.forward(to: route)
+            dependencies.navigator.forward(to: .amount(country: country,
+                                                       completion: { completion(.success($0)) }))
         }
     }
 }
