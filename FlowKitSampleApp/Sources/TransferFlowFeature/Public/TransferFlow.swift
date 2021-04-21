@@ -19,8 +19,7 @@ public struct TransferFlow: FlowNode {
 private extension TransferFlow {
     func showAmount(_ country: FlowAction<Country>) -> FlowAction<Transfer> {
         return country
-            .then(ShowAmountNode())
-            .then(NavigationNode<Int>(dependencies))
+            .then(ShowAmountNode(dependencies))
             .then { amount in
                 amount
                     .then(CheckAmountNode())
@@ -36,21 +35,18 @@ private extension TransferFlow {
 
     func showConfirmation(amount: FlowAction<Int>, country: FlowAction<Country>) -> FlowAction<Transfer> {
         amount
-            .then(ShowConfirmationNode(country: country))
-            .then(NavigationNode<Void>(dependencies))
+            .then(ShowConfirmationNode(dependencies, country: country))
             .then(CreateTransferNode(dependencies, country: country, amount: amount))
             .then {
                 $0
-                    .then(ShowSuccessNode())
-                    .then(NavigationNode<Void>(dependencies))
+                    .then(ShowSuccessNode(dependencies))
                     .then($0)
             }
     }
 
     func showInvalidAmount(amount: FlowAction<Int>, country: FlowAction<Country>) -> FlowAction<Transfer> {
         amount
-            .then(ShowInvalidAmountNode())
-            .then(NavigationNode<Void>(dependencies))
+            .then(ShowInvalidAmountNode(dependencies))
             .then(showConfirmation(amount: amount, country: country))
     }
 }

@@ -5,6 +5,9 @@ struct TransferFlowDependencies {
     let transfersRepository: TransfersRepository
 }
 
-extension TransferFlowDependencies: NavigationNodeDependencies { }
 extension TransferFlowDependencies: BackToRootNodeDependencies { }
 extension TransferFlowDependencies: CreateTransferNodeDependencies { }
+extension TransferFlowDependencies: ShowAmountNodeDependencies { }
+extension TransferFlowDependencies: ShowConfirmationNodeDependencies { }
+extension TransferFlowDependencies: ShowInvalidAmountDependencies { }
+extension TransferFlowDependencies: ShowSuccessDependencies { }
