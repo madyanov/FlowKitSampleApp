@@ -47,12 +47,7 @@ final class ConfirmationViewController: UIViewController {
             stackView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -16),
         ])
 
-        switch country {
-        case .russia: countryLabel.text = "Country: Russia"
-        case .germany: countryLabel.text = "Country: Germany"
-        case .france: countryLabel.text = "Country: Framce"
-        }
-
+        countryLabel.text = "Country: \(country.name)"
         amountLabel.text = "Amount: \(amount)"
     }
 }

@@ -49,13 +49,7 @@ final class SuccessViewController: UIViewController {
         ])
 
         identifierLabel.text = "Identifier: \(transfer.identifier)"
-
-        switch transfer.country {
-        case .russia: countryLabel.text = "Country: Russia"
-        case .germany: countryLabel.text = "Country: Germany"
-        case .france: countryLabel.text = "Country: Framce"
-        }
-
+        countryLabel.text = "Country: \(transfer.country.name)"
         amountLabel.text = "Amount: \(transfer.amount)"
     }
 }

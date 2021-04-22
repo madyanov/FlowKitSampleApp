@@ -12,8 +12,8 @@ struct ShowInvalidAmountNode: FlowNode {
         self.dependencies = dependencies
     }
 
-    func makeAction(with: Void) -> FlowAction<Void> {
-        return FlowAction<Void> { completion in
+    func makeAction(with transfer: TemporaryTransfer) -> FlowAction<TemporaryTransfer> {
+        return FlowAction<TemporaryTransfer> { completion in
             dependencies.navigator.forward(to: .invalidAmount)
         }
     }

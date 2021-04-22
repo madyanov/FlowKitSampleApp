@@ -12,10 +12,10 @@ struct ShowSuccessNode: FlowNode {
         self.dependencies = dependencies
     }
 
-    func makeAction(with transfer: Transfer) -> FlowAction<Void> {
-        return FlowAction<Void> { completion in
+    func makeAction(with transfer: Transfer) -> FlowAction<Transfer> {
+        return FlowAction<Transfer> { completion in
             dependencies.navigator.forward(to: .success(transfer: transfer,
-                                                        completion: { completion(.success(())) }))
+                                                        completion: { completion(.success(transfer)) }))
         }
     }
 }

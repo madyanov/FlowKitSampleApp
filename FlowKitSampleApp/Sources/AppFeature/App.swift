@@ -18,6 +18,7 @@ public final class App {
 
         let navigationDriver = NavigationDriver(navigationController: navigationController)
         let transferFlowFactory = TransferFlowFactory(navigatinDriver: navigationDriver)
+
         let transferFlow = transferFlowFactory.makeTransferFlow()
 
         let completion: (Result<Transfer, Error>) -> Void = { result in

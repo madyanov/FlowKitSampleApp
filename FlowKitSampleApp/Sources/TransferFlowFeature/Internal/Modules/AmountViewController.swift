@@ -16,11 +16,7 @@ final class AmountViewController: UIViewController {
 
         super.init(nibName: nil, bundle: nil)
 
-        switch country {
-        case .russia: title = "Russia"
-        case .germany: title = "Germany"
-        case .france: title = "Framce"
-        }
+        title = country.name
     }
 
     required init?(coder: NSCoder) {

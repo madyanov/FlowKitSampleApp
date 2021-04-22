@@ -7,25 +7,16 @@ protocol ShowConfirmationNodeDependencies {
 
 struct ShowConfirmationNode: FlowNode {
     private let dependencies: ShowConfirmationNodeDependencies
-    private let country: FlowAction<Country>
 
-    init(_ dependencies: ShowConfirmationNodeDependencies, country: FlowAction<Country>) {
+    init(_ dependencies: ShowConfirmationNodeDependencies) {
         self.dependencies = dependencies
-        self.country = country
     }
 
-    func makeAction(with amount: Int) -> FlowAction<Void> {
-        return FlowAction<Void> { completion in
-            country.complete {
-                switch $0 {
-                case .success(let country):
-                    dependencies.navigator.forward(to: .confirmation(country: country,
-                                                                     amount: amount,
-                                                                     completion: { completion(.success(())) }))
-                case .failure(let error):
-                    completion(.failure(error))
-                }
-            }
+    func makeAction(with transfer: TemporaryTransfer) -> FlowAction<TemporaryTransfer> {
+        return FlowAction<TemporaryTransfer> { completion in
+            dependencies.navigator.forward(to: .confirmation(country: transfer.country,
+                                                             amount: transfer.amount,
+                                                             completion: { completion(.success(transfer)) }))
         }
     }
 }
