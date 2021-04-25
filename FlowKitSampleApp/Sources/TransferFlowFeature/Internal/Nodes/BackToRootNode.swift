@@ -1,8 +1,7 @@
 import FlowKit
-import NavigationKit
 
 protocol BackToRootNodeDependencies {
-    var navigator: Navigator<Route, ModuleBuilder> { get }
+    var navigator: RouteNavigator { get }
 }
 
 struct BackToRootNode<Value>: FlowNode {

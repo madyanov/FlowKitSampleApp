@@ -1,8 +1,7 @@
 import FlowKit
-import NavigationKit
 
 protocol ShowSuccessDependencies {
-    var navigator: Navigator<Route, ModuleBuilder> { get }
+    var navigator: RouteNavigator { get }
 }
 
 struct ShowSuccessNode: FlowNode {

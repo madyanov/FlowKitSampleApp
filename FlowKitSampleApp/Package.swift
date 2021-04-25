@@ -5,7 +5,9 @@ import PackageDescription
 
 let package = Package(
     name: "FlowKitSampleApp",
-    platforms: [.iOS(.v11)],
+    platforms: [
+        .iOS(.v11),
+    ],
     products: [
         // Products define the executables and libraries a package produces, and make them visible to other packages.
         .library(
@@ -43,5 +45,8 @@ let package = Package(
         .target(
             name: "TransferFlowFeature",
             dependencies: ["FlowKit", "NavigationKit"]),
+        .testTarget(
+            name: "TransferFlowFeatureTests",
+            dependencies: ["TransferFlowFeature"]),
     ]
 )

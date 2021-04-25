@@ -2,7 +2,7 @@ import XCTest
 import FlowKit
 
 final class ZipTests: XCTestCase {
-    func testZip() {
+    func testZip3() {
         let expectation = self.expectation(description: "zip")
 
         let a1 = FlowAction<Int> { completion in

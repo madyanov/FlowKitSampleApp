@@ -1,8 +1,6 @@
-import NavigationKit
-
 struct TransferFlowDependencies {
-    let navigator: Navigator<Route, ModuleBuilder>
-    let transfersRepository: TransfersRepository
+    let navigator: RouteNavigator
+    let transferRepository: TransferRepository
 }
 
 extension TransferFlowDependencies: BackToRootNodeDependencies { }

@@ -35,6 +35,7 @@
 
 - [Пример флоу](FlowKitSampleApp/Sources/TransferFlowFeature/Public/TransferFlow.swift)
 - [Примеры реализации шагов](FlowKitSampleApp/Sources/TransferFlowFeature/Internal/Nodes)
+- [Пример тестов флоу](FlowKitSampleApp/Tests/TransferFlowFeatureTests)
 
 ## Итог
 

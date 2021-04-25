@@ -10,9 +10,9 @@ public final class TransferFlowFactory {
     public func makeTransferFlow() -> TransferFlow {
         let moduleBuilder = ModuleBuilder()
         let navigator = Navigator(driver: navigationDriver, builder: moduleBuilder)
-        let transfersRepository = TransfersRepository()
+        let transferRepository = RandomTransferRepository()
         let dependencies = TransferFlowDependencies(navigator: navigator,
-                                                    transfersRepository: transfersRepository)
+                                                    transferRepository: transferRepository)
         return TransferFlow(dependencies: dependencies)
     }
 }
