@@ -22,7 +22,6 @@ final class TransferFlowTests: XCTestCase {
             }
         }
 
-        let expectation = self.expectation(description: "transfer flow valid amount")
         var resultTransfer: Transfer?
         var resultError: Error?
 
@@ -33,8 +32,6 @@ final class TransferFlowTests: XCTestCase {
             case .failure(let error):
                 resultError = error
             }
-
-            expectation.fulfill()
         }
 
         FlowKit
@@ -42,13 +39,10 @@ final class TransferFlowTests: XCTestCase {
             .then(transferFlow)
             .complete(using: completion)
 
-        waitForExpectations(timeout: 1) { error in
-            XCTAssertNil(error)
-            XCTAssertNil(resultError)
-            XCTAssertEqual(resultTransfer?.country, .russia)
-            XCTAssertEqual(resultTransfer?.amount, inputAmount)
-            XCTAssertNil(self.navigator.currentRoute)
-        }
+        XCTAssertNil(resultError)
+        XCTAssertEqual(resultTransfer?.country, .russia)
+        XCTAssertEqual(resultTransfer?.amount, inputAmount)
+        XCTAssertNil(navigator.currentRoute)
     }
 
     func testTransferFlowIncompleteBecauseOfInvalidAmount() {
