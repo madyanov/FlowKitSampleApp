@@ -10,7 +10,7 @@ extension FlowAction {
                     node.makeAction(with: input).complete {
                         switch $0 {
                         case .success(let value):
-                            `switch`(Switch(input: input, value: value)).complete(using: completion)
+                            `switch`(Switch(source: self, input: input, value: value)).complete(using: completion)
                         case .failure(let error):
                             completion(.failure(error))
                         }
@@ -29,7 +29,7 @@ extension FlowAction {
             complete {
                 switch $0 {
                 case .success(let value):
-                    `switch`(Switch(input: value, value: value)).complete(using: completion)
+                    `switch`(Switch(source: self, input: value, value: value)).complete(using: completion)
                 case .failure(let error):
                     completion(.failure(error))
                 }

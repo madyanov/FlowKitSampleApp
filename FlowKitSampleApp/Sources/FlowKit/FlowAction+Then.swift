@@ -38,4 +38,8 @@ extension FlowAction {
             }
         }
     }
+
+    public func then<Output>(_ node: @escaping (FlowAction<Value>) -> FlowAction<Output>) -> FlowAction<Output> {
+        return then(InlineFlowNode<Value, Output>(node))
+    }
 }
