@@ -8,8 +8,12 @@ final class FlowActionThenTests: XCTestCase {
         let sumNode = SumFlowNodeMock()
         let stringNode = StringFlowNodeMock<Int>()
 
+        let initialIntArray = [3, 4, 5, 6, 7, 8, 9]
+        let expectedSumNodeResult = 42 // initialIntArray.reduce(0, +)
+        let expectedStringNodeResult = "42" // "\(expectedSumNodeResult)"
+
         FlowAction<[Int]> { completion in
-            Async(expectation) { completion(.success([3, 4, 5, 6, 7, 8, 9])) }
+            Async(expectation) { completion(.success(initialIntArray)) }
         }
         .then(sumNode)
         .then(stringNode)
@@ -17,8 +21,8 @@ final class FlowActionThenTests: XCTestCase {
 
         waitForExpectations(timeout: 1) { error in
             XCTAssertNil(error)
-            XCTAssertEqual(sumNode.sum, 42)
-            XCTAssertEqual(stringNode.string, "42")
+            XCTAssertEqual(sumNode.sum, expectedSumNodeResult)
+            XCTAssertEqual(stringNode.string, expectedStringNodeResult)
             XCTAssertTrue(finallyNode.actionExecuted)
         }
     }

@@ -8,14 +8,18 @@ final class FlowActionSwitchTests: XCTestCase {
         let stringNode = StringFlowNodeMock<Int>()
         var result: String?
 
+        let initialIntArray = [3, 4, 5, 6, 7, 8, 9]
+        let expectedSumNodeResult = 42 // initialIntArray.reduce(0, +)
+        let expectedStringNodeResult = "42" // "\(expectedSumNodeResult)"
+
         FlowAction<[Int]> { completion in
-            Async(expectation) { completion(.success([3, 4, 5, 6, 7, 8, 9])) }
+            Async(expectation) { completion(.success(initialIntArray)) }
         }
         .then(sumNode)
         .switch {
             $0
-                .when({ $0 < 42 }, then: ErrorFlowNodeMock<String>(ErrorMock.someError))
-                .when({ $0 == 42 }, then: stringNode)
+                .when({ $0 < expectedSumNodeResult }, then: ErrorFlowNodeMock<String>(ErrorMock.someError))
+                .when({ $0 == expectedSumNodeResult }, then: stringNode)
                 .default(ErrorFlowNodeMock<String>(ErrorMock.unknownError))
         }
         .complete {
@@ -29,9 +33,9 @@ final class FlowActionSwitchTests: XCTestCase {
 
         waitForExpectations(timeout: 1) { error in
             XCTAssertNil(error)
-            XCTAssertEqual(sumNode.sum, 42)
-            XCTAssertEqual(stringNode.string, "42")
-            XCTAssertEqual(result, "42")
+            XCTAssertEqual(sumNode.sum, expectedSumNodeResult)
+            XCTAssertEqual(stringNode.string, expectedStringNodeResult)
+            XCTAssertEqual(result, expectedStringNodeResult)
         }
     }
 }

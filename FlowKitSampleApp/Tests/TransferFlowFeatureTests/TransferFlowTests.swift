@@ -13,9 +13,11 @@ final class TransferFlowTests: XCTestCase {
     }()
 
     func testTransferFlowCompleteWithValidAmount() {
+        let inputAmount = 142
+
         navigator.routeResultMaker = { route in
             switch route {
-            case .amount: return 142
+            case .amount: return inputAmount
             default: return nil
             }
         }
@@ -44,15 +46,17 @@ final class TransferFlowTests: XCTestCase {
             XCTAssertNil(error)
             XCTAssertNil(resultError)
             XCTAssertEqual(resultTransfer?.country, .russia)
-            XCTAssertEqual(resultTransfer?.amount, 142)
+            XCTAssertEqual(resultTransfer?.amount, inputAmount)
             XCTAssertNil(self.navigator.currentRoute)
         }
     }
 
     func testTransferFlowIncompleteBecauseOfInvalidAmount() {
+        let inputAmount = 42
+
         navigator.routeResultMaker = { route in
             switch route {
-            case .amount: return 42
+            case .amount: return inputAmount
             default: return nil
             }
         }
