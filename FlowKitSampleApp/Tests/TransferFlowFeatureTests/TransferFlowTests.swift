@@ -75,7 +75,7 @@ final class TransferFlowTests: XCTestCase {
         XCTAssertNil(resultError)
         XCTAssertNil(resultTransfer)
 
-        switch self.navigator.currentRoute {
+        switch navigator.currentRoute {
         case .invalidAmount: break
         default: XCTFail()
         }
