@@ -3,7 +3,7 @@ extension FlowAction: Finalizable {
         work { completion($0) }
     }
 
-    public func finally<Node: VoidFlowNode>(_ node: Node) {
+    public func finally<Node: FlowNode>(_ node: Node) where Node.Input == Void {
         complete { _ in node.makeAction().execute() }
     }
 

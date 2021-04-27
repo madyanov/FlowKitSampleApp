@@ -11,7 +11,7 @@ extension Finalizer: Finalizable {
         action.complete(using: completion)
     }
 
-    public func finally<Node>(_ node: Node) where Node : FlowNode, Node.Input == Void {
+    public func finally<Node: FlowNode>(_ node: Node) where Node.Input == Void {
         return action.finally(node)
     }
 

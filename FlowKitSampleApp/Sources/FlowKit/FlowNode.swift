@@ -1,4 +1,4 @@
-public protocol FlowNode: VoidFlowNode {
+public protocol FlowNode {
     associatedtype Input
     associatedtype Output
 
@@ -8,12 +8,5 @@ public protocol FlowNode: VoidFlowNode {
 extension FlowNode where Input == Void {
     public func makeAction() -> FlowAction<Output> {
         return makeAction(with: ())
-    }
-}
-
-extension FlowNode {
-    public func makeAction() -> FlowAction<Void> {
-        assertionFailure("Void action factory not implemented in \(Self.self)")
-        return FlowAction<Void> { $0(.success(())) }
     }
 }

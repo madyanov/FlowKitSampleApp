@@ -1,5 +1,7 @@
 extension FlowAction {
-    public func `catch`(_ completion: @escaping (Error) -> VoidFlowNode?) -> Finalizer<Value>  {
+    public func `catch`<Node: FlowNode>(_ completion: @escaping (Error) -> Node?)
+        -> Finalizer<Value> where Node.Input == Void {
+
         let action = FlowAction { finally in
             complete {
                 switch $0 {
