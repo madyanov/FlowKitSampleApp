@@ -12,7 +12,7 @@ final class FlowActionSwitchTests: XCTestCase {
         let expectedSumNodeResult = 42 // initialIntArray.reduce(0, +)
         let expectedStringNodeResult = "42" // "\(expectedSumNodeResult)"
 
-        FlowAction<[Int]> { completion in
+        FlowAction { completion in
             Async(expectation) { completion(.success(initialIntArray)) }
         }
         .then(sumNode)

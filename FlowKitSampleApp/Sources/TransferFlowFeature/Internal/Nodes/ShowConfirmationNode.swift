@@ -12,7 +12,7 @@ struct ShowConfirmationNode: FlowNode {
     }
 
     func makeAction(with transfer: TemporaryTransfer) -> FlowAction<TemporaryTransfer> {
-        return FlowAction<TemporaryTransfer> { completion in
+        return FlowAction { completion in
             dependencies.navigator.forward(to: .confirmation(country: transfer.country,
                                                              amount: transfer.amount,
                                                              completion: { completion(.success(transfer)) }))

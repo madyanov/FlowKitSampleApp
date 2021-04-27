@@ -12,7 +12,7 @@ struct BackToRootNode<Value>: FlowNode {
     }
 
     func makeAction(with value: Value) -> FlowAction<Value> {
-        return FlowAction<Value> {
+        return FlowAction {
             dependencies.navigator.backToRoot()
             $0(.success(value))
         }

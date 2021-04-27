@@ -8,7 +8,7 @@ public struct TransferFlow: FlowNode {
     }
 
     public func makeAction(with country: Country) -> FlowAction<Transfer> {
-        return FlowAction<Transfer> { completion in
+        return FlowAction { completion in
             return initialize(with: country)
                 .then(ShowAmountNode(dependencies))
                 .switch(CheckAmountNode()) {

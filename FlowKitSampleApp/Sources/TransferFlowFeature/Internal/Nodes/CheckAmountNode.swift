@@ -7,7 +7,7 @@ struct CheckAmountNode: FlowNode {
     }
 
     func makeAction(with transfer: TemporaryTransfer) -> FlowAction<Result> {
-        return FlowAction<Result> {
+        return FlowAction {
             if transfer.amount > 100 {
                 $0(.success(.valid))
             } else {

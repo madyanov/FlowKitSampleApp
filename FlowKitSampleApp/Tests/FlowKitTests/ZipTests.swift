@@ -9,15 +9,15 @@ final class ZipTests: XCTestCase {
         let expectedAction2Result = 43
         let expectedAction3Result = 44
 
-        let action1 = FlowAction<Int> { completion in
+        let action1 = FlowAction { completion in
             async { completion(.success(expectedAction1Result)) }
         }
 
-        let action2 = FlowAction<Int> { completion in
+        let action2 = FlowAction { completion in
             async { completion(.success(expectedAction2Result)) }
         }
 
-        let action3 = FlowAction<Int> { completion in
+        let action3 = FlowAction { completion in
             async { completion(.success(expectedAction3Result)) }
         }
 

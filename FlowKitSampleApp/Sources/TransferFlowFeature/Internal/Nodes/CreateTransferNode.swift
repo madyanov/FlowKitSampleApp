@@ -12,7 +12,7 @@ struct CreateTransferNode: FlowNode {
     }
 
     func makeAction(with transfer: TemporaryTransfer) -> FlowAction<Transfer> {
-        return FlowAction<Transfer> { completion in
+        return FlowAction { completion in
             dependencies
                 .transferRepository
                 .createTransfer(country: transfer.country,

@@ -8,6 +8,6 @@ struct InlineFlowNode<Input, Output> {
 
 extension InlineFlowNode: FlowNode {
     func makeAction(with input: Input) -> FlowAction<Output> {
-        return node(FlowAction<Input> { $0(.success(input)) })
+        return node(FlowAction { $0(.success(input)) })
     }
 }

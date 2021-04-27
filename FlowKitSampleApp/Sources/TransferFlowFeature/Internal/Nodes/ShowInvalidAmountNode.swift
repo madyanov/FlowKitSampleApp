@@ -12,7 +12,7 @@ struct ShowInvalidAmountNode: FlowNode {
     }
 
     func makeAction(with transfer: TemporaryTransfer) -> FlowAction<TemporaryTransfer> {
-        return FlowAction<TemporaryTransfer> { completion in
+        return FlowAction { completion in
             dependencies.navigator.forward(to: .invalidAmount)
         }
     }

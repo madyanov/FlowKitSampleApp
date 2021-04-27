@@ -8,6 +8,6 @@ final class ErrorFlowNodeMock<Value>: FlowNode {
     }
 
     func makeAction(with: Void) -> FlowAction<Value> {
-        return FlowAction<Value> { $0(.failure(self.error)) }
+        return FlowAction { $0(.failure(self.error)) }
     }
 }

@@ -12,7 +12,7 @@ struct ShowAmountNode: FlowNode {
     }
 
     func makeAction(with country: Country) -> FlowAction<TemporaryTransfer> {
-        return FlowAction<TemporaryTransfer> { completion in
+        return FlowAction { completion in
             dependencies.navigator.forward(to: .amount(country: country,
                                                        completion: {
                                                         completion(.success(TemporaryTransfer(country: country, amount: $0)))
