@@ -1,6 +1,7 @@
 import FlowKit
 
 protocol CreateTransferNodeDependencies {
+    var state: TransferFlowState { get }
     var transferRepository: TransferRepository { get }
 }
 
@@ -13,11 +14,17 @@ struct CreateTransferNode: FlowNode {
 
     func action(with transfer: TemporaryTransferWithTariff) -> FlowAction<Transfer> {
         return FlowAction { completion in
+            dependencies.state.loading.value = true
+
             dependencies
                 .transferRepository
                 .createTransfer(country: transfer.country,
                                 amount: transfer.amount,
-                                tariff: transfer.tariff) { completion(.success($0)) }
+                                tariff: transfer.tariff) {
+
+                    dependencies.state.loading.value = false
+                    completion(.success($0))
+                }
         }
     }
 }

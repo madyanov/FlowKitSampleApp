@@ -1,4 +1,5 @@
 import UIKit
+import PromiseKit
 
 enum ConfirmationResult {
     case editAmount
@@ -7,12 +8,25 @@ enum ConfirmationResult {
 }
 
 final class ConfirmationViewController: UIViewController {
+    private let loadingPublisher: Publisher<Bool>
     private let country: Country
     private let amount: Int
     private let tariff: Tariff
     private let completion: (ConfirmationResult) -> Void
 
-    init(country: Country, amount: Int, tariff: Tariff, completion: @escaping (ConfirmationResult) -> Void) {
+    private lazy var activityIndicator: UIActivityIndicatorView = {
+        let activityIndicator = UIActivityIndicatorView()
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        return activityIndicator
+    }()
+
+    init(loadingPublisher: Publisher<Bool>,
+         country: Country,
+         amount: Int,
+         tariff: Tariff,
+         completion: @escaping (ConfirmationResult) -> Void) {
+
+        self.loadingPublisher = loadingPublisher
         self.country = country
         self.amount = amount
         self.tariff = tariff
@@ -54,6 +68,7 @@ final class ConfirmationViewController: UIViewController {
         continueButton.addTarget(self, action: #selector(didTapContinueButton), for: .touchUpInside)
 
         view.addSubview(stackView)
+        view.addSubview(activityIndicator)
         stackView.addArrangedSubview(countryLabel)
         stackView.addArrangedSubview(amountLabel)
         stackView.addArrangedSubview(comissionLabel)
@@ -65,11 +80,22 @@ final class ConfirmationViewController: UIViewController {
             stackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
             stackView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 16),
             stackView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -16),
+
+            activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor),
         ])
 
         countryLabel.text = "Country: \(country.name)"
         amountLabel.text = "Amount: \(amount)"
         comissionLabel.text = "Comission: \(tariff.comission)%"
+
+        loadingPublisher.subscribe { [weak self] loading in
+            if loading {
+                self?.activityIndicator.startAnimating()
+            } else {
+                self?.activityIndicator.stopAnimating()
+            }
+        }
     }
 }
 

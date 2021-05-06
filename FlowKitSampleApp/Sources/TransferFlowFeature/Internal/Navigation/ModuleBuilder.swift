@@ -10,8 +10,12 @@ extension ModuleBuilder: NavigationKit.ModuleBuilder {
             return AmountViewController(country: country, completion: completion)
         case .tariffs(let tariffPublisher, let completion):
             return TariffsViewController(tariffPublisher: tariffPublisher, completion: completion)
-        case .confirmation(let country, let amount, let tariff, let completion):
-            return ConfirmationViewController(country: country, amount: amount, tariff: tariff, completion: completion)
+        case .confirmation(let loadingPublisher, let country, let amount, let tariff, let completion):
+            return ConfirmationViewController(loadingPublisher: loadingPublisher,
+                                              country: country,
+                                              amount: amount,
+                                              tariff: tariff,
+                                              completion: completion)
         case .success(let transfer, let completion):
             return SuccessViewController(transfer: transfer, completion: completion)
         case .invalidAmount:

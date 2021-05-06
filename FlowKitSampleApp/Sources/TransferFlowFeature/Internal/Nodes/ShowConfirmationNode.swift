@@ -1,6 +1,7 @@
 import FlowKit
 
 protocol ShowConfirmationNodeDependencies {
+    var state: TransferFlowState { get }
     var navigator: RouteNavigator { get }
 }
 
@@ -15,7 +16,8 @@ struct ShowConfirmationNode: FlowNode {
         -> FlowAction<(result: ConfirmationResult, transfer: TemporaryTransferWithTariff)> {
 
         return FlowAction { completion in
-            dependencies.navigator.forward(to: .confirmation(country: transfer.country,
+            dependencies.navigator.forward(to: .confirmation(loadingPublisher: dependencies.state.loading,
+                                                             country: transfer.country,
                                                              amount: transfer.amount,
                                                              tariff: transfer.tariff,
                                                              completion: {
