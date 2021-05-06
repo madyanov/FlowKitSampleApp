@@ -11,12 +11,13 @@ struct CreateTransferNode: FlowNode {
         self.dependencies = dependencies
     }
 
-    func makeAction(with transfer: TemporaryTransfer) -> FlowAction<Transfer> {
+    func action(with transfer: TemporaryTransferWithTariff) -> FlowAction<Transfer> {
         return FlowAction { completion in
             dependencies
                 .transferRepository
                 .createTransfer(country: transfer.country,
-                                amount: transfer.amount) { completion(.success($0)) }
+                                amount: transfer.amount,
+                                tariff: transfer.tariff) { completion(.success($0)) }
         }
     }
 }

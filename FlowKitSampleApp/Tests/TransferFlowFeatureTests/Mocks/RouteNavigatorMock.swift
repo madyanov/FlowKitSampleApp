@@ -1,4 +1,5 @@
 import UIKit
+
 @testable import TransferFlowFeature
 
 final class RouteNavigatorMock {
@@ -12,10 +13,14 @@ extension RouteNavigatorMock: RouteNavigator {
 
         switch route {
         case .amount(_, let completion):
-            guard let routeResult = routeResultMaker?(route) else { return nil }
-            completion(routeResult as! Int)
-        case .confirmation(_, _, let completion):
-            completion()
+            guard let amount = routeResultMaker?(route) as? Int else { return nil }
+            completion(amount)
+        case .tariffs(_, let completion):
+            guard let tariff = routeResultMaker?(route) as? Tariff else { return nil }
+            completion(tariff)
+        case .confirmation(_, _, _, let completion):
+            guard let result = routeResultMaker?(route) as? ConfirmationResult else { return nil }
+            completion(result)
         case .success(_, let completion):
             completion()
         case .invalidAmount:
@@ -24,6 +29,10 @@ extension RouteNavigatorMock: RouteNavigator {
 
         return nil
     }
+
+    func back() { }
+
+    func back(to: Int) { }
 
     func backToRoot() {
         currentRoute = nil

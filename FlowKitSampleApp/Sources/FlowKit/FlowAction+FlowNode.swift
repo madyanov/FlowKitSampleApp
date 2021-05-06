@@ -1,5 +1,5 @@
 extension FlowAction: FlowNode {
-    public func makeAction(with: Void) -> FlowAction<Output> {
+    public func action(with: Void) -> FlowAction<Output> {
         return self
     }
 }

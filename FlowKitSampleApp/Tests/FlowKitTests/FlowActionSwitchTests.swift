@@ -1,4 +1,5 @@
 import XCTest
+
 @testable import FlowKit
 
 final class FlowActionSwitchTests: XCTestCase {
@@ -18,9 +19,9 @@ final class FlowActionSwitchTests: XCTestCase {
         .then(sumNode)
         .switch {
             $0
-                .when({ $0 < expectedSumNodeResult }, then: ErrorFlowNodeMock<String>(ErrorMock.someError))
+                .when({ $0 < expectedSumNodeResult }, then: ErrorFlowNodeMock<String>(error: .someError))
                 .when({ $0 == expectedSumNodeResult }, then: stringNode)
-                .default(ErrorFlowNodeMock<String>(ErrorMock.unknownError))
+                .default(ErrorFlowNodeMock<String>(error: .unknownError))
         }
         .complete {
             switch $0 {

@@ -9,8 +9,8 @@ final class FlowActionCatchTests: XCTestCase {
         FlowAction<Void> { completion in
             Async(expectation) { completion(.failure(ErrorMock.someError)) }
         }
-        .catch { _ in node }
-        .execute()
+        .catch { _ in node.erase() }
+        .complete()
 
         waitForExpectations(timeout: 1) { error in
             XCTAssertNil(error)

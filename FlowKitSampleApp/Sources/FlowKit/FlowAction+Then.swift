@@ -4,7 +4,7 @@ extension FlowAction {
             complete {
                 switch $0 {
                 case .success(let output):
-                    node.makeAction(with: output).complete(using: completion)
+                    node.action(with: output).complete(using: completion)
                 case .failure(let error):
                     completion(.failure(error))
                 }
@@ -17,7 +17,7 @@ extension FlowAction {
             complete {
                 switch $0 {
                 case .success:
-                    node.makeAction().complete(using: completion)
+                    node.action().complete(using: completion)
                 case .failure(let error):
                     completion(.failure(error))
                 }
@@ -25,13 +25,13 @@ extension FlowAction {
         }
     }
 
-    // workaround to solve Void -> Void ambiguity
+    // Workaround to solve Void -> Void ambiguity
     public func then<Node: FlowNode>(_ node: Node) -> FlowAction<Node.Output> where Node.Input == Void, Output == Void {
         return FlowAction<Node.Output> { completion in
             complete {
                 switch $0 {
                 case .success:
-                    node.makeAction().complete(using: completion)
+                    node.action().complete(using: completion)
                 case .failure(let error):
                     completion(.failure(error))
                 }
@@ -39,9 +39,9 @@ extension FlowAction {
         }
     }
 
-    public func then<NewOutput>(_ node: @escaping (FlowAction<Output>) -> FlowAction<NewOutput>)
+    public func then<NewOutput>(_ transform: @escaping (FlowAction<Output>) -> FlowAction<NewOutput>)
         -> FlowAction<NewOutput> {
 
-        return then(InlineFlowNode<Output, NewOutput>(node))
+        return then(InlineFlowNode(transform: transform))
     }
 }

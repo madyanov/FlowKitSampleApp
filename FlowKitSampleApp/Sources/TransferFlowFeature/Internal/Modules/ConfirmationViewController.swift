@@ -1,13 +1,21 @@
 import UIKit
 
+enum ConfirmationResult {
+    case editAmount
+    case editTariff
+    case `continue`
+}
+
 final class ConfirmationViewController: UIViewController {
     private let country: Country
     private let amount: Int
-    private let completion: () -> Void
+    private let tariff: Tariff
+    private let completion: (ConfirmationResult) -> Void
 
-    init(country: Country, amount: Int, completion: @escaping () -> Void) {
+    init(country: Country, amount: Int, tariff: Tariff, completion: @escaping (ConfirmationResult) -> Void) {
         self.country = country
         self.amount = amount
+        self.tariff = tariff
         self.completion = completion
 
         super.init(nibName: nil, bundle: nil)
@@ -31,6 +39,15 @@ final class ConfirmationViewController: UIViewController {
 
         let countryLabel = UILabel()
         let amountLabel = UILabel()
+        let comissionLabel = UILabel()
+
+        let editAmountButton = UIButton(type: .system)
+        editAmountButton.setTitle("Edit Amount", for: .normal)
+        editAmountButton.addTarget(self, action: #selector(didTapEditAmountButton), for: .touchUpInside)
+
+        let editTariffButton = UIButton(type: .system)
+        editTariffButton.setTitle("Edit Tariff", for: .normal)
+        editTariffButton.addTarget(self, action: #selector(didTapEditTariffButton), for: .touchUpInside)
 
         let continueButton = UIButton(type: .system)
         continueButton.setTitle("Continue", for: .normal)
@@ -39,6 +56,9 @@ final class ConfirmationViewController: UIViewController {
         view.addSubview(stackView)
         stackView.addArrangedSubview(countryLabel)
         stackView.addArrangedSubview(amountLabel)
+        stackView.addArrangedSubview(comissionLabel)
+        stackView.addArrangedSubview(editAmountButton)
+        stackView.addArrangedSubview(editTariffButton)
         stackView.addArrangedSubview(continueButton)
 
         NSLayoutConstraint.activate([
@@ -49,12 +69,23 @@ final class ConfirmationViewController: UIViewController {
 
         countryLabel.text = "Country: \(country.name)"
         amountLabel.text = "Amount: \(amount)"
+        comissionLabel.text = "Comission: \(tariff.comission)%"
     }
 }
 
 private extension ConfirmationViewController {
     @objc
+    func didTapEditAmountButton() {
+        completion(.editAmount)
+    }
+
+    @objc
+    func didTapEditTariffButton() {
+        completion(.editTariff)
+    }
+
+    @objc
     func didTapContinueButton() {
-        completion()
+        completion(.continue)
     }
 }

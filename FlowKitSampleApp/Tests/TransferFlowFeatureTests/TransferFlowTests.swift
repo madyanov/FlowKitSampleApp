@@ -1,5 +1,6 @@
 import XCTest
 import FlowKit
+
 @testable import TransferFlowFeature
 
 final class TransferFlowTests: XCTestCase {
@@ -7,18 +8,27 @@ final class TransferFlowTests: XCTestCase {
 
     private lazy var transferFlow: TransferFlow = {
         let transferRepository = RandomTransferRepositoryMock()
-        let dependencies = TransferFlowDependencies(navigator: navigator,
+        let state = TransferFlowState()
+        let dependencies = TransferFlowDependencies(state: state,
+                                                    navigator: navigator,
                                                     transferRepository: transferRepository)
         return TransferFlow(dependencies: dependencies)
     }()
 
     func testTransferFlowCompleteWithValidAmount() {
         let inputAmount = 142
+        let selectedTariff = Tariff(comission: 10)
 
         navigator.routeResultMaker = { route in
             switch route {
-            case .amount: return inputAmount
-            default: return nil
+            case .amount:
+                return inputAmount
+            case .tariffs:
+                return selectedTariff
+            case .confirmation:
+                return ConfirmationResult.continue
+            default:
+                return nil
             }
         }
 
@@ -42,6 +52,7 @@ final class TransferFlowTests: XCTestCase {
         XCTAssertNil(resultError)
         XCTAssertEqual(resultTransfer?.country, .russia)
         XCTAssertEqual(resultTransfer?.amount, inputAmount)
+        XCTAssertEqual(resultTransfer?.tariff.comission, selectedTariff.comission)
         XCTAssertNil(navigator.currentRoute)
     }
 
@@ -50,8 +61,10 @@ final class TransferFlowTests: XCTestCase {
 
         navigator.routeResultMaker = { route in
             switch route {
-            case .amount: return inputAmount
-            default: return nil
+            case .amount:
+                return inputAmount
+            default:
+                return nil
             }
         }
 
@@ -76,8 +89,10 @@ final class TransferFlowTests: XCTestCase {
         XCTAssertNil(resultTransfer)
 
         switch navigator.currentRoute {
-        case .invalidAmount: break
-        default: XCTFail()
+        case .invalidAmount:
+            break
+        default:
+            XCTFail()
         }
     }
 }

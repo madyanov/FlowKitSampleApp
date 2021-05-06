@@ -1,4 +1,5 @@
 import XCTest
+
 @testable import FlowKit
 
 final class FlowActionTests: XCTestCase {

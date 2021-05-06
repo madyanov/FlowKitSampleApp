@@ -16,6 +16,14 @@ public final class Navigator<Route, Builder: ModuleBuilder> where Builder.Route 
         return viewController
     }
 
+    public func back() {
+        driver.back()
+    }
+
+    public func back(to index: Int) {
+        driver.back(to: index)
+    }
+
     public func backToRoot() {
         driver.backToRoot()
     }

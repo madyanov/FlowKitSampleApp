@@ -11,7 +11,9 @@ public final class TransferFlowFactory {
         let moduleBuilder = ModuleBuilder()
         let navigator = Navigator(driver: navigationDriver, builder: moduleBuilder)
         let transferRepository = RandomTransferRepository()
-        let dependencies = TransferFlowDependencies(navigator: navigator,
+        let state = TransferFlowState()
+        let dependencies = TransferFlowDependencies(state: state,
+                                                    navigator: navigator,
                                                     transferRepository: transferRepository)
         return TransferFlow(dependencies: dependencies)
     }

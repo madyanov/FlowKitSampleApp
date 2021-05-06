@@ -27,7 +27,7 @@
         associatedtype Input
         associatedtype Output
 
-        func makeAction(with: Input) -> FlowAction<Output>
+        func action(with: Input) -> FlowAction<Output>
     }
     ```
 

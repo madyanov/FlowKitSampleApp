@@ -10,7 +10,7 @@ final class FlowActionFinallyTests: XCTestCase {
         FlowAction<Void> { completion in
             Async(expectation) { completion(.success(())) }
         }
-        .catch { _ in catchNode }
+        .catch { _ in catchNode.erase() }
         .finally(finallyNode)
 
         waitForExpectations(timeout: 1) { error in
@@ -28,7 +28,7 @@ final class FlowActionFinallyTests: XCTestCase {
         FlowAction<Void> { completion in
             Async(expectation) { completion(.failure(ErrorMock.someError)) }
         }
-        .catch { _ in catchNode }
+        .catch { _ in catchNode.erase() }
         .finally(finallyNode)
 
         waitForExpectations(timeout: 1) { error in
