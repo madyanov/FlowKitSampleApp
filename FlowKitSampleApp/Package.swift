@@ -14,6 +14,9 @@ let package = Package(
             name: "FlowKit",
             targets: ["FlowKit"]),
         .library(
+            name: "PromiseKit",
+            targets: ["PromiseKit"]),
+        .library(
             name: "NavigationKit",
             targets: ["NavigationKit"]),
         .library(
@@ -37,6 +40,9 @@ let package = Package(
             name: "FlowKitTests",
             dependencies: ["FlowKit"]),
         .target(
+            name: "PromiseKit",
+            dependencies: []),
+        .target(
             name: "NavigationKit",
             dependencies: []),
         .target(
@@ -44,7 +50,7 @@ let package = Package(
             dependencies: ["FlowKit", "NavigationKit", "TransferFlowFeature"]),
         .target(
             name: "TransferFlowFeature",
-            dependencies: ["FlowKit", "NavigationKit"]),
+            dependencies: ["FlowKit", "NavigationKit", "PromiseKit"]),
         .testTarget(
             name: "TransferFlowFeatureTests",
             dependencies: ["TransferFlowFeature"]),

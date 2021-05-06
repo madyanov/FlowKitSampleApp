@@ -1,7 +1,7 @@
 public protocol Finalizable {
-    associatedtype Value
+    associatedtype Output
 
-    func complete(using: @escaping (Result<Value, Error>) -> Void)
     func finally<Node: FlowNode>(_: Node) where Node.Input == Void
-    func execute()
+    func complete(using: @escaping (Result<Output, Error>) -> Void)
+    func complete()
 }

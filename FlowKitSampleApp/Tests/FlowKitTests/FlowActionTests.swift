@@ -3,34 +3,34 @@ import XCTest
 
 final class FlowActionTests: XCTestCase {
     func testSyncSuccessComplete() {
-        var resultValue: Int?
-        let expectedValue = 42
+        var resultOutput: Int?
+        let expectedOutput = 42
 
-        FlowAction { $0(.success(expectedValue)) }
+        FlowAction { $0(.success(expectedOutput)) }
             .complete {
                 switch $0 {
-                case .success(let value):
-                    resultValue = value
+                case .success(let output):
+                    resultOutput = output
                 case .failure:
                     break
                 }
             }
 
-        XCTAssertEqual(resultValue, expectedValue)
+        XCTAssertEqual(resultOutput, expectedOutput)
     }
 
     func testAsyncSuccessComplete() {
         let expectation = self.expectation(description: "async success complete")
-        var resultValue: Int?
-        let expectedValue = 42
+        var resultOutput: Int?
+        let expectedOutput = 42
 
         FlowAction { completion in
-            Async(expectation) { completion(.success(expectedValue)) }
+            Async(expectation) { completion(.success(expectedOutput)) }
         }
         .complete {
             switch $0 {
-            case .success(let value):
-                resultValue = value
+            case .success(let output):
+                resultOutput = output
             case .failure:
                 break
             }
@@ -38,7 +38,7 @@ final class FlowActionTests: XCTestCase {
 
         waitForExpectations(timeout: 1) { error in
             XCTAssertNil(error)
-            XCTAssertEqual(resultValue, expectedValue)
+            XCTAssertEqual(resultOutput, expectedOutput)
         }
     }
 

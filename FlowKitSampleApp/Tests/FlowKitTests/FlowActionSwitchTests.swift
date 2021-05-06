@@ -24,8 +24,8 @@ final class FlowActionSwitchTests: XCTestCase {
         }
         .complete {
             switch $0 {
-            case .success(let value):
-                result = value
+            case .success(let output):
+                result = output
             case .failure:
                 break
             }

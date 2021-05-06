@@ -1,7 +1,7 @@
-public struct FlowAction<Value> {
-    let work: (@escaping (Result<Value, Error>) -> Void) -> Void
+public struct FlowAction<Output> {
+    let work: (@escaping (Result<Output, Error>) -> Void) -> Void
 
-    public init(work: @escaping (@escaping (Result<Value, Error>) -> Void) -> Void) {
+    public init(work: @escaping (@escaping (Result<Output, Error>) -> Void) -> Void) {
         self.work = work
     }
 }

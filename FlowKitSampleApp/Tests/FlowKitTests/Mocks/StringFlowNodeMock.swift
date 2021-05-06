@@ -1,11 +1,11 @@
 import FlowKit
 
-final class StringFlowNodeMock<Value: CustomStringConvertible>: FlowNode {
+final class StringFlowNodeMock<Output: CustomStringConvertible>: FlowNode {
     private(set) var string: String?
 
-    func makeAction(with value: Value) -> FlowAction<String> {
+    func makeAction(with output: Output) -> FlowAction<String> {
         return FlowAction { completion in
-            let string = "\(value)"
+            let string = "\(output)"
             self.string = string
             completion(.success(string))
         }

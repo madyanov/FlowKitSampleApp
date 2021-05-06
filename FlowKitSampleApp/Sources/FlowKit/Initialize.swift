@@ -1,3 +1,3 @@
-public func initialize<Value>(with value: Value) -> FlowAction<Value> {
-    return FlowAction { $0(.success(value)) }
+public func initialize<Output>(with output: Output) -> FlowAction<Output> {
+    return FlowAction { $0(.success(output)) }
 }
