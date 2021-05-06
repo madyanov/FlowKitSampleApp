@@ -2,22 +2,9 @@ import FlowKit
 
 struct TransformConfirmationResultToStep: ValueTransformer {
     typealias Input = (result: ConfirmationResult, transfer: TemporaryTransferWithTariff)
-    typealias Output = Step
-
-    enum Step {
-        case editAmount
-        case editTariff
-        case `continue`
-    }
+    typealias Output = ConfirmationResult
 
     func transform(input: Input) -> Output? {
-        switch input.result {
-        case .editAmount:
-            return .editAmount
-        case .editTariff:
-            return .editTariff
-        case .continue:
-            return .continue
-        }
+        return input.result
     }
 }
