@@ -4,7 +4,7 @@ struct TransformConfirmationResultToTransfer: ValueTransformer {
     typealias Input = (result: ConfirmationResult, transfer: TemporaryTransferWithTariff)
     typealias Output = TemporaryTransferWithTariff
 
-    func transform(input: Input) -> Output? {
+    func map(input: Input) -> Output {
         return input.transfer
     }
 }

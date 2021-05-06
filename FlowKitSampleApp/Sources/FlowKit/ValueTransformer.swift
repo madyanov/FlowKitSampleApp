@@ -1,14 +1,9 @@
-public protocol ValueTransformer: FlowNode {
-    associatedtype Input
-    associatedtype Output
-
-    func transform(input: Input) -> Output?
+public protocol ValueTransformer: OptionalValueTransformer {
+    func map(input: Input) -> Output
 }
 
 extension ValueTransformer {
-    public func action(with input: Input) -> FlowAction<Output> {
-        return FlowAction { completion in
-            transform(input: input).map { completion(.success($0)) }
-        }
+    public func compactMap(input: Input) -> Output? {
+        return map(input: input)
     }
 }

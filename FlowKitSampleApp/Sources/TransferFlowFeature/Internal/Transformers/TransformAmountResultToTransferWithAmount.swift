@@ -1,10 +1,10 @@
 import FlowKit
 
-struct TransformAmountResultToTransferWithAmount: ValueTransformer {
+struct TransformAmountResultToTransferWithAmount: OptionalValueTransformer {
     typealias Input = ShowAmountNode.Result
     typealias Output = TemporaryTransferWithAmount
 
-    func transform(input: Input) -> Output? {
+    func compactMap(input: Input) -> Output? {
         switch input {
         case .transferWithTariff:
             return nil

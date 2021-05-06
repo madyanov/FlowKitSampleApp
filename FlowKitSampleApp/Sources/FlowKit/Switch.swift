@@ -9,13 +9,13 @@ public final class Switch<Input, Value, Output> {
         self.value = value
     }
 
-    public func when<Transformer: ValueTransformer, Node: FlowNode>(_ transform: Transformer,
+    public func when<Transformer: OptionalValueTransformer, Node: FlowNode>(_ transform: Transformer,
                                                                     then node: Node) -> Self
         where Transformer.Input == Input,
               Transformer.Output == Node.Input,
               Node.Output == Output {
 
-        guard action == nil, let transformed = transform.transform(input: input) else { return self }
+        guard action == nil, let transformed = transform.compactMap(input: input) else { return self }
         action = node.action(with: transformed)
         return self
     }

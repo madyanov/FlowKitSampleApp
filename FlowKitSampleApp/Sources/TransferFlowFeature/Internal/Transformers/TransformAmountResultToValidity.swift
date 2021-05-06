@@ -9,7 +9,7 @@ struct TransformAmountResultToValidity: ValueTransformer {
         case invalid
     }
 
-    func transform(input: Input) -> Output? {
+    func map(input: Input) -> Output {
         let amount: Int
 
         switch input {

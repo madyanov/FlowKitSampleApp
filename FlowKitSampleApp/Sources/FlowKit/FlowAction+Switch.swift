@@ -22,7 +22,7 @@ extension FlowAction {
                     node.action(with: input).complete {
                         switch $0 {
                         case .success(let value):
-                            guard let transformed = transform.transform(input: input) else { return }
+                            let transformed = transform.map(input: input)
                             builder(Switch(input: transformed, value: value)).complete(using: completion)
                         case .failure(let error):
                             completion(.failure(error))
@@ -52,14 +52,12 @@ extension FlowAction {
 }
 
 public struct PassthroughTransformer<Value>: ValueTransformer {
-
-    public func transform(input: Value) -> Value? {
-        return input
-    }
+    public typealias Input = Value
+    public typealias Output = Value
 
     public init() { }
 
-    public typealias Input = Value
-
-    public typealias Output = Value
+    public func map(input: Value) -> Value {
+        return input
+    }
 }
