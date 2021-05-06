@@ -1,12 +1,4 @@
 extension FlowAction {
-    public func `switch`<NewOutput, Node: FlowNode>(_ node: Node,
-                                                    builder: @escaping (Switch<Output, Node.Output, NewOutput>)
-                                                        -> FlowAction<NewOutput>)
-        -> FlowAction<NewOutput> where Node.Input == Output {
-
-        return `switch`(node, transform: PassthroughTransformer<Output>(), builder: builder)
-    }
-
     public func `switch`<NewOutput,
                          Node: FlowNode,
                          Transformer: ValueTransformer>(_ node: Node,
@@ -35,6 +27,14 @@ extension FlowAction {
         }
     }
 
+    public func `switch`<NewOutput, Node: FlowNode>(_ node: Node,
+                                                    builder: @escaping (Switch<Output, Node.Output, NewOutput>)
+                                                        -> FlowAction<NewOutput>)
+        -> FlowAction<NewOutput> where Node.Input == Output {
+
+        return `switch`(node, transform: PassthroughTransformer<Output>(), builder: builder)
+    }
+
     public func `switch`<NewOutput>(_ builder: @escaping (Switch<Output, Output, NewOutput>) -> FlowAction<NewOutput>)
         -> FlowAction<NewOutput> {
 
@@ -48,16 +48,5 @@ extension FlowAction {
                 }
             }
         }
-    }
-}
-
-public struct PassthroughTransformer<Value>: ValueTransformer {
-    public typealias Input = Value
-    public typealias Output = Value
-
-    public init() { }
-
-    public func map(input: Value) -> Value {
-        return input
     }
 }

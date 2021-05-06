@@ -20,16 +20,11 @@ public struct TransferFlow: FlowNode {
                     .default(TransformAmountResultToTransferWithTariff())
                 }
                 .then(ShowConfirmationNode(dependencies))
-                .switch(TransformConfirmationResultToStep()) { $0
-                    .when({ $0 == .editAmount }) { $0
-                        .then(TransformConfirmationResultToTransfer())
-                        .then(BackToAmountNode(dependencies))
-                    }
-                    .when({ $0 == .editTariff }) { $0
-                        .then(TransformConfirmationResultToTransfer())
-                        .then(BackToTariffsNode(dependencies))
-                    }
-                    .default(TransformConfirmationResultToTransfer())
+                .switch(TransformConfirmationResultToStep(),
+                        transform: TransformConfirmationResultToTransfer()) { $0
+                    .when({ $0 == .editAmount }, then: BackToAmountNode(dependencies))
+                    .when({ $0 == .editTariff }, then: BackToTariffsNode(dependencies))
+                    .continue()
                 }
                 .then(CreateTransferNode(dependencies))
                 .then(ShowSuccessNode(dependencies))

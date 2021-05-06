@@ -18,7 +18,7 @@ extension RouteNavigatorMock: RouteNavigator {
         case .tariffs(_, let completion):
             guard let tariff = routeResultMaker?(route) as? Tariff else { return nil }
             completion(tariff)
-        case .confirmation(_, _, _, let completion):
+        case .confirmation(_, _, _, _, let completion):
             guard let result = routeResultMaker?(route) as? ConfirmationResult else { return nil }
             completion(result)
         case .success(_, let completion):

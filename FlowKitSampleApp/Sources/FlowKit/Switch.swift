@@ -10,7 +10,7 @@ public final class Switch<Input, Value, Output> {
     }
 
     public func when<Transformer: OptionalValueTransformer, Node: FlowNode>(_ transform: Transformer,
-                                                                    then node: Node) -> Self
+                                                                            then node: Node) -> Self
         where Transformer.Input == Input,
               Transformer.Output == Node.Input,
               Node.Output == Output {
