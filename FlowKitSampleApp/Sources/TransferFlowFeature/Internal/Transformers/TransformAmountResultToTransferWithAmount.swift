@@ -1,6 +1,6 @@
 import FlowKit
 
-struct TransformAmountResultToTransferWithAmount: InputTransformer {
+struct TransformAmountResultToTransferWithAmount: ValueTransformer {
     typealias Input = ShowAmountNode.Result
     typealias Output = TemporaryTransferWithAmount
 

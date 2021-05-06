@@ -1,6 +1,6 @@
 import FlowKit
 
-struct TransformConfirmationResultToStep: InputTransformer {
+struct TransformConfirmationResultToStep: ValueTransformer {
     typealias Input = (result: ConfirmationResult, transfer: TemporaryTransferWithTariff)
     typealias Output = Step
 

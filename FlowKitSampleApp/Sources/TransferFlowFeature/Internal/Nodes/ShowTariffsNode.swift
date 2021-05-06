@@ -16,6 +16,8 @@ struct ShowTariffsNode: FlowNode {
         return FlowAction { completion in
             dependencies.navigator.forward(to: .tariffs(tariffPublisher: dependencies.state.tariff,
                                                         completion: {
+                                                            dependencies.state.tariff.value = $0
+
                                                             let transfer = TemporaryTransferWithTariff(country: transfer.country,
                                                                                                        amount: transfer.amount,
                                                                                                        tariff: $0)
