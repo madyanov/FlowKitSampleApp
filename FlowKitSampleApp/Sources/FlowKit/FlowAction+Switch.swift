@@ -2,7 +2,7 @@ extension FlowAction {
     public func `switch`<NewOutput,
                          Node: FlowNode,
                          Transformer: ValueTransformer>(_ node: Node,
-                                                        transform: Transformer,
+                                                        transformer: Transformer,
                                                         builder: @escaping (Switch<Transformer.Output, Node.Output, NewOutput>)
                                                             -> FlowAction<NewOutput>)
         -> FlowAction<NewOutput> where Node.Input == Output, Transformer.Input == Output {
@@ -16,7 +16,7 @@ extension FlowAction {
                     wrapper.complete(with: input) {
                         switch $0 {
                         case .success(let value):
-                            let transformed = transform.map(input: input)
+                            let transformed = transformer.map(input: input)
                             builder(Switch(input: transformed, value: value)).complete(using: completion)
                         case .failure(let error):
                             completion(.failure(error))
@@ -34,7 +34,7 @@ extension FlowAction {
                                                         -> FlowAction<NewOutput>)
         -> FlowAction<NewOutput> where Node.Input == Output {
 
-        return `switch`(node, transform: PassthroughTransformer<Output>(), builder: builder)
+        return `switch`(node, transformer: PassthroughTransformer<Output>(), builder: builder)
     }
 
     public func `switch`<NewOutput>(_ builder: @escaping (Switch<Output, Output, NewOutput>) -> FlowAction<NewOutput>)
