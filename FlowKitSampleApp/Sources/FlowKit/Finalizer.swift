@@ -11,7 +11,7 @@ extension Finalizer: Finalizable {
         return action.finally(node)
     }
 
-    public func complete(using completion: @escaping (Result<Output, Error>) -> Void) {
+    public func complete(using completion: @escaping FlowAction<Output>.Completion) {
         action.complete(using: completion)
     }
 

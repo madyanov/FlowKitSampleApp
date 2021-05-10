@@ -1,9 +1,9 @@
 extension FlowAction: Finalizable {
     public func finally<Node: FlowNode>(_ node: Node) where Node.Input == Void {
-        complete { _ in node.action().complete() }
+        complete { _ in node.action(with: ()).complete() }
     }
 
-    public func complete(using completion: @escaping (Result<Output, Error>) -> Void) {
+    public func complete(using completion: @escaping Completion) {
         work { completion($0) }
     }
 

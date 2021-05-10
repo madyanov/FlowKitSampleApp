@@ -7,11 +7,13 @@ extension FlowAction {
                                                             -> FlowAction<NewOutput>)
         -> FlowAction<NewOutput> where Node.Input == Output, Transformer.Input == Output {
 
+        let wrapper = PendingFlowNodeWrapper(node)
+
         return FlowAction<NewOutput> { completion in
             complete {
                 switch $0 {
                 case .success(let input):
-                    node.action(with: input).complete {
+                    wrapper.complete(with: input) {
                         switch $0 {
                         case .success(let value):
                             let transformed = transform.map(input: input)

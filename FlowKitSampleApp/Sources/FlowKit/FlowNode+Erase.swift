@@ -1,5 +1,5 @@
 extension FlowNode {
     public func erase() -> AnyFlowNode<Input, Output> {
-        return AnyFlowNode(node: self)
+        return AnyFlowNode(self)
     }
 }

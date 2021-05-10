@@ -1,7 +1,9 @@
 public struct FlowAction<Output> {
-    let work: (@escaping (Result<Output, Error>) -> Void) -> Void
+    public typealias Completion = (Result<Output, Error>) -> Void
 
-    public init(work: @escaping (@escaping (Result<Output, Error>) -> Void) -> Void) {
+    let work: (@escaping Completion) -> Void
+
+    public init(work: @escaping (@escaping Completion) -> Void) {
         self.work = work
     }
 }

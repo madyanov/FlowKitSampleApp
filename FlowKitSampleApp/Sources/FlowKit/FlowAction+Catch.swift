@@ -7,7 +7,7 @@ extension FlowAction {
                     finally(.success(output))
                 case .failure(let error):
                     if let node = completion(error) {
-                        node.action().complete { _ in finally(.failure(error)) }
+                        node.action(with: ()).complete { _ in finally(.failure(error)) }
                     } else {
                         finally(.failure(error))
                     }

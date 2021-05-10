@@ -32,7 +32,7 @@ public final class Switch<Input, Value, Output> {
         where Node.Input == Void, Node.Output == Output {
 
         guard action == nil, predicate(value) else { return self }
-        action = then.action()
+        action = then.action(with: ())
         return self
     }
 
@@ -51,7 +51,7 @@ public final class Switch<Input, Value, Output> {
     public func `default`<Node: FlowNode>(_ node: Node) -> FlowAction<Output>
         where Node.Input == Void, Node.Output == Output {
 
-        return action ?? node.action()
+        return action ?? node.action(with: ())
     }
 
     public func `default`(_ transform: (FlowAction<Input>) -> FlowAction<Output>) -> FlowAction<Output> {
