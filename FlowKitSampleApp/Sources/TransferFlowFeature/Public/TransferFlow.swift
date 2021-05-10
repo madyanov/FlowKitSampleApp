@@ -21,7 +21,7 @@ public struct TransferFlow: FlowNode {
                 }
                 .then(ShowConfirmationNode(dependencies))
                 .switch(TransformConfirmationResultToStep(),
-                        transform: TransformConfirmationResultToTransfer()) { $0
+                        transformer: TransformConfirmationResultToTransfer()) { $0
                     .when({ $0 == .editAmount }, then: BackToAmountNode(dependencies))
                     .when({ $0 == .editTariff }, then: BackToTariffsNode(dependencies))
                     .continue()
