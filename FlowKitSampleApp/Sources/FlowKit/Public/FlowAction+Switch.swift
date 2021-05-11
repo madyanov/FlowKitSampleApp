@@ -7,13 +7,11 @@ extension FlowAction {
                                                             -> FlowAction<NewOutput>)
         -> FlowAction<NewOutput> where Node.Input == Output, Transformer.Input == Output {
 
-        let disposable = DisposableFlowNode(node)
-
         return FlowAction<NewOutput> { completion in
             complete {
                 switch $0 {
                 case .success(let output):
-                    disposable.complete(with: output) {
+                    node.action(with: output).complete {
                         switch $0 {
                         case .success(let value):
                             let transformed = transformer.map(input: output)

@@ -26,7 +26,7 @@ public struct TransferFlow: FlowNode {
                     .when({ $0 == .editTariff }, then: BackToTariffsNode(dependencies))
                     .continue()
                 }
-                .then(CreateTransferNode(dependencies))
+                .then(DisposableFlowNode(CreateTransferNode(dependencies)))
                 .then(ShowSuccessNode(dependencies))
                 .then(EndFlowNode(dependencies))
                 .complete(using: completion)
