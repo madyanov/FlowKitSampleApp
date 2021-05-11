@@ -8,8 +8,6 @@ protocol CreateTransferNodeDependencies {
 struct CreateTransferNode: FlowNode {
     private let dependencies: CreateTransferNodeDependencies
 
-    var disposable: Bool { return true }
-
     init(_ dependencies: CreateTransferNodeDependencies) {
         self.dependencies = dependencies
     }

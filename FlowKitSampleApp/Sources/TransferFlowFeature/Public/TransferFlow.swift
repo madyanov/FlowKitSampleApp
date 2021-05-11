@@ -33,6 +33,7 @@ public struct TransferFlow: FlowNode {
                         .cancellable(contextProvider: contextProvider))
                 .then(ShowSuccessNode(dependencies))
                 .then(EndFlowNode(dependencies))
+                .catch { _ in EndFlowNode(dependencies).erase() }
                 .complete(using: completion)
         }
     }
