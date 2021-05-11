@@ -7,16 +7,16 @@ extension FlowAction {
                                                             -> FlowAction<NewOutput>)
         -> FlowAction<NewOutput> where Node.Input == Output, Transformer.Input == Output {
 
-        let wrapper = PendingFlowNodeWrapper(node)
+        let disposable = DisposableFlowNode(node)
 
         return FlowAction<NewOutput> { completion in
             complete {
                 switch $0 {
-                case .success(let input):
-                    wrapper.complete(with: input) {
+                case .success(let output):
+                    disposable.complete(with: output) {
                         switch $0 {
                         case .success(let value):
-                            let transformed = transformer.map(input: input)
+                            let transformed = transformer.map(input: output)
                             builder(Switch(input: transformed, value: value)).complete(using: completion)
                         case .failure(let error):
                             completion(.failure(error))

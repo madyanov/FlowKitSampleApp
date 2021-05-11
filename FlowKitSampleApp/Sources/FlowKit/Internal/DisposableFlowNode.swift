@@ -1,4 +1,4 @@
-final class PendingFlowNodeWrapper<Node: FlowNode> {
+final class DisposableFlowNode<Node: FlowNode> {
     private let node: Node
     private var pending = true
 
@@ -7,6 +7,11 @@ final class PendingFlowNodeWrapper<Node: FlowNode> {
     }
 
     func complete(with input: Node.Input, completion: @escaping FlowAction<Node.Output>.Completion) {
+        guard node.disposable else {
+            node.action(with: input).complete(using: completion)
+            return
+        }
+
         guard pending else { return }
         pending = false
 

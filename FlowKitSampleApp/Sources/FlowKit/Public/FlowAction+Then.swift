@@ -1,12 +1,12 @@
 extension FlowAction {
     public func then<Node: FlowNode>(_ node: Node) -> FlowAction<Node.Output> where Node.Input == Output {
-        let wrapper = PendingFlowNodeWrapper(node)
+        let disposable = DisposableFlowNode(node)
 
         return FlowAction<Node.Output> { completion in
             complete {
                 switch $0 {
                 case .success(let output):
-                    wrapper.complete(with: output, completion: completion)
+                    disposable.complete(with: output, completion: completion)
                 case .failure(let error):
                     completion(.failure(error))
                 }
