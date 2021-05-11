@@ -22,7 +22,7 @@
 
 - [`FlowNode`](FlowKitSampleApp/Sources/FlowKit/Public/FlowNode.swift) – абстракция, подобная `(Input) -> FlowAction<Output>`, дающая возможность строить цепочки, где `Input` предыдущего шага связан с `Output`-ом следующего. Используется для реализации *асинхронной* логики шагов. Должны быть атомарны.
 
-- [`ValueTransformer`](FlowKitSampleApp/Sources/FlowKit/Public/ValueTransformer.swift) и [`OptionalValueTransformer`](FlowKitSampleApp/Sources/FlowKit/Public/OptionalValueTransformer.swift) – абстракции над `FlowNode`, используемая для реализации *синхронной* логики шагов. Например, маппинг одного значения в другое. Должны быть атомарны.
+- [`ValueTransformer`](FlowKitSampleApp/Sources/FlowKit/Public/ValueTransformer.swift) и [`OptionalValueTransformer`](FlowKitSampleApp/Sources/FlowKit/Public/OptionalValueTransformer.swift) – абстракции над `FlowNode`, используемая для реализации *синхронной* логики шагов. Например, тансформация одного значения в другое. Должны быть атомарны.
 
 - [`DisposableFlowNode`](FlowKitSampleApp/Sources/FlowKit/Public/DisposableFlowNode.swift) – абстракция над `FlowNode`, используемая для реализации шагов, которые не должны повторяться. Например, когда задача не должна повторяться при повторных нажатиях на какую-либо кнопку.
 
@@ -34,7 +34,7 @@
 
 ## Примеры решения типовых задач
 
-**Запрет повторения шага:**
+### Запрет повторения шага
 
 ```swift
 .then(CreateTransferNode(dependencies).disposable())
@@ -44,7 +44,7 @@
 
 > :warning: Чтобы `DisposableFlowNode` не застрял в состоянии `busy`, `completion` в нем должен вызываться в любом случае.
 
-**Игнорирование результата работы шага при уходе с экрана:**
+### Игнорирование результата работы шага при уходе с экрана
 
 ```swift
 .then(CreateTransferNode(dependencies).cancellable(contextProvider: contextProvider))
@@ -52,7 +52,7 @@
 
 Метод `cancellable` оборачивает `CreateTransferNode` в `CancellableFlowNode`. `contextProvider` является реализацией протокола [`ContextProvider`](FlowKitSampleApp/Sources/FlowKit/Public/ContextProvider.swift), простым примером которой является [реализация, возвращающая топовый `UIViewController`](FlowKitSampleApp/Sources/TransferFlowFeature/Internal/ApplicationContextProvider.swift).
 
-**Показ лоадеров:**
+### Показ лоадеров
 
 ```swift
 struct CreateTransferNode: FlowNode {
@@ -74,7 +74,7 @@ struct CreateTransferNode: FlowNode {
 
 > :warning: Использовать шареный стейт разрешается только для передачи данных назад во флоу.
 
-**Ветвление с конвертацией значения и предикатами по этому значению:**
+### Ветвление с конвертацией значения и предикатами по этому значению
 
 ```swift
 .switch(TransformAmountResultToValidity()) { $0                             // 1
@@ -89,7 +89,7 @@ struct CreateTransferNode: FlowNode {
 
 > :warning: Предикаты должны быть максимально простыми, желательно в 1 строчку.
 
-**Ветвление с конвертацией в опциональное значение вместо предикатов:**
+### Ветвление с конвертацией в опциональное значение вместо предикатов
 
 ```swift
 .switch { $0
@@ -101,7 +101,7 @@ struct CreateTransferNode: FlowNode {
 1. Если конвертер `TransformAmountResultToTransferWithAmount` не вернул `nil`, то запускаем `ShowTariffsNode` с передачей ему `Amount`
 2. Иначе метод `default` взвращает значение после конвертации `TransformAmountResultToTransferWithTariff`
 
-**Ветвление с конвертацией значения, предикатами по этому значению и конвертацией перед каждой веткой:**
+### Ветвление с конвертацией значения, предикатами по этому значению и конвертацией перед каждой веткой
 
 ```swift
 .switch(TransformConfirmationResultToStep(),                            // 1
