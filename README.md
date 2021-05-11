@@ -40,7 +40,9 @@
 .then(CreateTransferNode(dependencies).disposable())
 ```
 
-Метод `disposable` оборачивает `CreateTransferNode` в `DisposableFlowNode`. **Важно**: чтобы `CreateTransferNode` не застрял в состоянии `busy`, `completion` в нем должен вызываться в любом случае.
+Метод `disposable` оборачивает `CreateTransferNode` в `DisposableFlowNode`.
+
+> :warning: Чтобы `CreateTransferNode` не застрял в состоянии `busy`, `completion` в нем должен вызываться в любом случае.
 
 **Игнорирование результата работы шага при уходе с экрана:**
 
@@ -66,6 +68,9 @@ struct CreateTransferNode: FlowNode {
     }
 }
 ```
+
+1. Стартуем лоадер перед запросом. `dependencies.state.loading` является значением типа `Publisher<Bool>`, на которое подписаны презентеры экранов.
+2. После заврешения запроса останавливаем лоадер.
 
 **Ветвление с конвертацией значения и предикатами по этому значению:**
 
