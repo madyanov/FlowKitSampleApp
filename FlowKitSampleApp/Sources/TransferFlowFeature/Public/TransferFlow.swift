@@ -8,6 +8,8 @@ public struct TransferFlow: FlowNode {
     }
 
     public func action(with country: Country) -> FlowAction<Transfer> {
+        let contextProvider = ApplicationContextProvider()
+
         return FlowAction { completion in
             return initialize(with: country)
                 .then(ShowAmountNode(dependencies))
@@ -26,7 +28,9 @@ public struct TransferFlow: FlowNode {
                     .when({ $0 == .editTariff }, then: BackToTariffsNode(dependencies))
                     .continue()
                 }
-                .then(DisposableFlowNode(CreateTransferNode(dependencies)))
+                .then(CreateTransferNode(dependencies)
+                        .disposable()
+                        .cancellable(contextProvider: contextProvider))
                 .then(ShowSuccessNode(dependencies))
                 .then(EndFlowNode(dependencies))
                 .complete(using: completion)
