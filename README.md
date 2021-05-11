@@ -30,7 +30,7 @@
 
 - [`AnyFlowNode`](FlowKitSampleApp/Sources/FlowKit/Public/AnyFlowNode.swift) – абстракция, стирающая тип `FlowNode`. Используется, когда нужно работать не с *конкретным* `FlowNode`, а *любым*, но с конкретными `Input`-ом и `Output`-ом.
 
-- [`Publisher`](FlowKitSampleApp/Sources/PromiseKit/Publisher.swift) – вспомогательная реализация промисов, не входящая во FlowKit, но позволяющая продемонстрировать передачу данных назад во флоу. Например, для показа лоадеров или сохранении состояния флоу при возврате на предыдущие экраны.
+- [`Publisher`](FlowKitSampleApp/Sources/PromiseKit/Publisher.swift) – вспомогательная реализация нотификатора/холдера, не входящая во FlowKit, но позволяющая продемонстрировать передачу данных назад во флоу. Например, для показа лоадеров или сохранении состояния при возврате на предыдущие экраны.
 
 ## Примеры решения типовых задач
 
@@ -42,7 +42,7 @@
 
 Метод `disposable` оборачивает `CreateTransferNode` в `DisposableFlowNode`.
 
-> :warning: Чтобы `CreateTransferNode` не застрял в состоянии `busy`, `completion` в нем должен вызываться в любом случае.
+> :warning: Чтобы `DisposableFlowNode` не застрял в состоянии `busy`, `completion` в нем должен вызываться в любом случае.
 
 **Игнорирование результата работы шага при уходе с экрана:**
 
@@ -58,10 +58,10 @@
 struct CreateTransferNode: FlowNode {
     func action(with input: ...) -> FlowAction<Transfer> {
         return FlowAction { completion in
-            dependencies.state.loading.value = true // 1
+            state.loading.value = true // 1
 
-            dependencies.repository.createTransfer(with: input) {
-                dependencies.state.loading.value = false // 2
+            repository.createTransfer(with: input) {
+                state.loading.value = false // 2
                 completion(.success($0))
             }
         }
@@ -69,8 +69,10 @@ struct CreateTransferNode: FlowNode {
 }
 ```
 
-1. Стартуем лоадер перед запросом. `dependencies.state.loading` является значением типа `Publisher<Bool>`, на которое подписаны презентеры экранов.
+1. Стартуем лоадер перед запросом. `state.loading` является значением типа `Publisher<Bool>`, на которое подписаны презентеры экранов.
 2. После заврешения запроса останавливаем лоадер.
+
+> :warning: Использовать шареный стейт разрешается только для передачи данных назад во флоу.
 
 **Ветвление с конвертацией значения и предикатами по этому значению:**
 
@@ -84,6 +86,8 @@ struct CreateTransferNode: FlowNode {
 1. `TransformAmountResultToValidity` конвертирует значение `Amount` в `Validity`
 2. Если `Validity` равно `invalid`, то запускаем `ShowInvalidAmountNode` с передачей ему `Amount`
 3. Иначе метод `continue` возвращает `Amount`, переданное в `TransformAmountResultToValidity` перед заходом в `switch`
+
+> :warning: Предикаты должны быть максимально простыми, желательно в 1 строчку.
 
 **Ветвление с конвертацией в опциональное значение вместо предикатов:**
 
@@ -113,6 +117,13 @@ struct CreateTransferNode: FlowNode {
 3. Если `Step` равен `editAmount`, то запускаем `BackToAmountNode` с передачей ему `Transfer`
 4. Если `Step` равен `editTariff`, то запускаем `BackToTariffsNode` с передачей ему `Transfer`
 5. Иначе метод `continue` возвращает значение `Transfer` из `TransformConfirmationResultToTransfer`
+
+## Итог
+
+- `FlowNode` должны быть атомарными. Не должны содержать координирующей логики (если `FlowNode` не является реализацией флоу), не должны иметь более одной операции навигации.
+- Использовать шареный стейт разрешается только для передачи данных назад во флоу. Для передачи вперед нужно использовать трансформацию значений.
+- Чтобы `DisposableFlowNode` не застрял в состоянии `busy`, `completion` в нем должен вызываться в любом случае.
+- Предикаты в ветвлениях должны быть максимально простыми, желательно в 1 строчку.
 
 ## Примеры
 

@@ -14,8 +14,8 @@ struct BackToTariffsNode: FlowNode {
 
     func action(with transfer: TemporaryTransferWithTariff) -> FlowAction<TemporaryTransferWithTariff> {
         return FlowAction { _ in
-            dependencies.navigator.back()
             dependencies.state.tariff.value = transfer.tariff
+            dependencies.navigator.back()
         }
     }
 }
