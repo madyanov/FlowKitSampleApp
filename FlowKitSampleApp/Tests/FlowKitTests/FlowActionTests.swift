@@ -1,6 +1,5 @@
 import XCTest
-
-@testable import FlowKit
+import FlowKit
 
 final class FlowActionTests: XCTestCase {
     func testSyncActionSuccessCompletion() {
