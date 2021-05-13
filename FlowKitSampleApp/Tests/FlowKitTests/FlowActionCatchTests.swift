@@ -2,8 +2,8 @@ import XCTest
 import FlowKit
 
 final class FlowActionCatchTests: XCTestCase {
-    func testCatch() {
-        let expectation = self.expectation(description: "catch")
+    func testCatchExecutedOnError() {
+        let expectation = self.expectation(description: "catch executed on error")
         let node = VoidFlowNodeMock()
 
         FlowAction<Void> { completion in

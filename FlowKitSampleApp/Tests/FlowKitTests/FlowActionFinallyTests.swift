@@ -2,8 +2,8 @@ import XCTest
 import FlowKit
 
 final class FlowActionFinallyTests: XCTestCase {
-    func testFinallyWithoutErrors() {
-        let expectation = self.expectation(description: "finally without errors")
+    func testFinallyExecutedWithoutErrors() {
+        let expectation = self.expectation(description: "finally executed without errors")
         let catchNode = VoidFlowNodeMock()
         let finallyNode = VoidFlowNodeMock()
 
@@ -20,8 +20,8 @@ final class FlowActionFinallyTests: XCTestCase {
         }
     }
 
-    func testFinallyWithError() {
-        let expectation = self.expectation(description: "finally with error")
+    func testFinallyExecutedWithErrors() {
+        let expectation = self.expectation(description: "finally executed with errors")
         let catchNode = VoidFlowNodeMock()
         let finallyNode = VoidFlowNodeMock()
 

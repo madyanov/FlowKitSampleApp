@@ -41,8 +41,8 @@ extension FlowAction {
         return FlowAction<NewOutput> { completion in
             complete {
                 switch $0 {
-                case .success(let value):
-                    builder(Switch(input: value, value: value)).complete(using: completion)
+                case .success(let output):
+                    builder(Switch(input: output, value: output)).complete(using: completion)
                 case .failure(let error):
                     completion(.failure(error))
                 }

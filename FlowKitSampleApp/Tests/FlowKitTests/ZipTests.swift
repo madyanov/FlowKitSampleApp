@@ -2,8 +2,8 @@ import XCTest
 import FlowKit
 
 final class ZipTests: XCTestCase {
-    func testZip3() {
-        let expectation = self.expectation(description: "zip")
+    func testZipOfThreeActions() {
+        let expectation = self.expectation(description: "zip of three actions")
 
         let expectedAction1Result = 42
         let expectedAction2Result = 43
@@ -24,14 +24,8 @@ final class ZipTests: XCTestCase {
         var result: (Int, Int, Int)?
 
         zip(action1, action2, action3)
-            .complete {
-                switch $0 {
-                case .success(let output):
-                    result = output
-                case .failure:
-                    break
-                }
-
+            .success {
+                result = $0
                 expectation.fulfill()
             }
 

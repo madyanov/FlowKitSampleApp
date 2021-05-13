@@ -2,8 +2,8 @@ import XCTest
 import FlowKit
 
 final class FlowActionThenTests: XCTestCase {
-    func testThenWithoutErrors() {
-        let expectation = self.expectation(description: "then without errors")
+    func testThenExecutedWithoutErrors() {
+        let expectation = self.expectation(description: "then executed without errors")
         let finallyNode = VoidFlowNodeMock()
         let sumNode = SumFlowNodeMock()
         let stringNode = StringFlowNodeMock<Int>()
@@ -27,8 +27,8 @@ final class FlowActionThenTests: XCTestCase {
         }
     }
 
-    func testThenWithError() {
-        let expectation = self.expectation(description: "then with error")
+    func testThenNotExecutedWithErrors() {
+        let expectation = self.expectation(description: "then not executed with errors")
         let finallyNode = VoidFlowNodeMock()
         let sumNode = SumFlowNodeMock()
         let stringNode = StringFlowNodeMock<Int>()

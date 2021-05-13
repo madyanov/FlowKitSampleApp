@@ -51,8 +51,5 @@ let package = Package(
         .target(
             name: "TransferFlowFeature",
             dependencies: ["FlowKit", "NavigationKit", "PromiseKit"]),
-        .testTarget(
-            name: "TransferFlowFeatureTests",
-            dependencies: ["TransferFlowFeature"]),
     ]
 )
