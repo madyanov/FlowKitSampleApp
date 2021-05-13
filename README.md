@@ -12,7 +12,7 @@
 
 ## Термины
 
-- Шаги, ноды, узлы – составные элементы флоу, содержащию логику каких-либо действий, совершаемых при прохождении данного флоу.
+- Шаги, ноды, узлы – составные элементы флоу, содержащию логику каких-либо действий, совершаемых при прохождении флоу.
 
 ## Детали реализации
 
@@ -22,11 +22,11 @@
 
 - [`FlowNode`](FlowKitSampleApp/Sources/FlowKit/Public/FlowNode.swift) – абстракция, подобная `(Input) -> FlowAction<Output>`, дающая возможность строить цепочки, где `Input` предыдущего шага связан с `Output`-ом следующего. Используется для реализации *асинхронной* логики шагов. Должны быть атомарны.
 
-- [`ValueTransformer`](FlowKitSampleApp/Sources/FlowKit/Public/ValueTransformer.swift) и [`OptionalValueTransformer`](FlowKitSampleApp/Sources/FlowKit/Public/OptionalValueTransformer.swift) – абстракции над `FlowNode`, используемая для реализации *синхронной* логики шагов. Используется для тансформация одного значения в другое. Должны быть атомарны.
+- [`ValueTransformer`](FlowKitSampleApp/Sources/FlowKit/Public/ValueTransformer.swift) и [`OptionalValueTransformer`](FlowKitSampleApp/Sources/FlowKit/Public/OptionalValueTransformer.swift) – абстракции над `FlowNode`, используемая для реализации *синхронной* логики шагов. Например, для тансформация одного значения в другое. Должны быть атомарны.
 
-- [`DisposableFlowNode`](FlowKitSampleApp/Sources/FlowKit/Public/DisposableFlowNode.swift) – обертка для нод, задачи которых не должны повторяться, пока текущая не завершена. Используется, когда задача не должна повторяться при повторном взаимодействии пользователя с интерфейсом.
+- [`DisposableFlowNode`](FlowKitSampleApp/Sources/FlowKit/Public/DisposableFlowNode.swift) – обертка для нод, задачи которых не должны повторяться, пока текущая не завершена. Например, когда задача не должна повторяться при повторном взаимодействии пользователя с интерфейсом.
 
-- [`CancellableFlowNode`](FlowKitSampleApp/Sources/FlowKit/Public/CancellableFlowNode.swift) – обертка для нод, задачи которых не должны продолжаться при изменении текущего контекста. Используется, когда долгая задача должна завершиться без обработки результата при уходе с текущего экрана.
+- [`CancellableFlowNode`](FlowKitSampleApp/Sources/FlowKit/Public/CancellableFlowNode.swift) – обертка для нод, задачи которых не должны продолжаться при изменении текущего контекста. Например, когда долгая задача должна завершиться без обработки результата при уходе с текущего экрана.
 
 - [`AnyFlowNode`](FlowKitSampleApp/Sources/FlowKit/Public/AnyFlowNode.swift) – обертка для нод, стирающая их тип. Используется, когда нужно работать не с *конкретным* `FlowNode`, а *любым*, с соответствующими `Input`-ом и `Output`-ом.
 
