@@ -22,7 +22,7 @@
 
 - [`FlowNode`](FlowKitSampleApp/Sources/FlowKit/Public/FlowNode.swift) и [`OptionalFlowNode`](FlowKitSampleApp/Sources/FlowKit/Public/OptionalFlowNode.swift) – абстракции, подобные `(Input) -> FlowAction<Output>`, дающие возможность строить цепочки, где `Input` предыдущего шага связан с `Output`-ом следующего. Используются для реализации *асинхронной* логики шагов. Должны быть атомарны.
 
-- [`InputTransformer`](FlowKitSampleApp/Sources/FlowKit/Public/InputTransformer.swift) и [`OptionalInputTransformer`](FlowKitSampleApp/Sources/FlowKit/Public/OptionalInputTransformer.swift) – абстракции над `FlowNode`, используемая для реализации *синхронной* логики шагов. Например, для тансформация одного значения в другое. Должны быть атомарны.
+- [`InputTransformer`](FlowKitSampleApp/Sources/FlowKit/Public/InputTransformer.swift) и [`OptionalInputTransformer`](FlowKitSampleApp/Sources/FlowKit/Public/OptionalInputTransformer.swift) – абстракции над `FlowNode`, используемые для реализации *синхронной* логики шагов. Например, для тансформация одного значения в другое. Должны быть атомарны.
 
 - [`DisposableFlowNode`](FlowKitSampleApp/Sources/FlowKit/Public/DisposableFlowNode.swift) – обертка для нод, задачи которых не должны повторяться, пока текущая не завершена. Например, когда задача не должна повторяться при повторном взаимодействии пользователя с интерфейсом.
 
