@@ -36,9 +36,9 @@ public final class Switch<Input, Value, Output> {
         return self
     }
 
-    public func when(_ predicate: (Value) -> Bool, then transform: (FlowAction<Input>) -> FlowAction<Output>) -> Self {
+    public func when(_ predicate: (Value) -> Bool, then builder: (FlowAction<Input>) -> FlowAction<Output>) -> Self {
         guard action == nil, predicate(value) else { return self }
-        action = transform(initialize(with: input))
+        action = builder(initialize(with: input))
         return self
     }
 
@@ -54,8 +54,8 @@ public final class Switch<Input, Value, Output> {
         return action ?? node.action(with: ())
     }
 
-    public func `default`(_ transform: (FlowAction<Input>) -> FlowAction<Output>) -> FlowAction<Output> {
-        return action ?? transform(initialize(with: input))
+    public func `default`(_ builder: (FlowAction<Input>) -> FlowAction<Output>) -> FlowAction<Output> {
+        return action ?? builder(initialize(with: input))
     }
 
     public func `continue`() -> FlowAction<Output> where Output == Input {

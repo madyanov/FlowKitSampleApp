@@ -1,4 +1,7 @@
 public final class DisposableFlowNode<Node: FlowNode>: FlowNode {
+    public typealias Input = Node.Input
+    public typealias Output = Node.Output
+
     private let node: Node
     private var busy = false
 
@@ -6,7 +9,7 @@ public final class DisposableFlowNode<Node: FlowNode>: FlowNode {
         self.node = node
     }
 
-    public func action(with input: Node.Input) -> FlowAction<Node.Output> {
+    public func action(with input: Input) -> FlowAction<Output> {
         return FlowAction { [weak self] completion in
             guard let self = self else { return }
             guard self.busy == false else { return }

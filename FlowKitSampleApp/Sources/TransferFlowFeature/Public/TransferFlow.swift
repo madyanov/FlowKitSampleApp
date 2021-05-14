@@ -1,13 +1,16 @@
 import FlowKit
 
 public struct TransferFlow: FlowNode {
+    public typealias Input = Country
+    public typealias Output = Transfer
+
     private let dependencies: TransferFlowDependencies
 
     init(dependencies: TransferFlowDependencies) {
         self.dependencies = dependencies
     }
 
-    public func action(with country: Country) -> FlowAction<Transfer> {
+    public func action(with country: Input) -> FlowAction<Output> {
         let contextProvider = ApplicationContextProvider()
 
         return FlowAction { completion in

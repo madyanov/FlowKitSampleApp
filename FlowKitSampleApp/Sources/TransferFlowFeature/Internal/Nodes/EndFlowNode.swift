@@ -5,6 +5,8 @@ protocol EndFlowNodeDependencies {
 }
 
 struct EndFlowNode<Output>: FlowNode {
+    typealias Input = Output
+
     private let dependencies: EndFlowNodeDependencies
 
     init(_ dependencies: EndFlowNodeDependencies) {

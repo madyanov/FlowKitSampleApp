@@ -6,6 +6,9 @@ protocol ShowAmountNodeDependencies {
 }
 
 struct ShowAmountNode: FlowNode {
+    typealias Input = Country
+    typealias Output = Result
+
     enum Result {
         case transferWithAmount(TemporaryTransferWithAmount)
         case transferWithTariff(TemporaryTransferWithTariff)
@@ -17,7 +20,7 @@ struct ShowAmountNode: FlowNode {
         self.dependencies = dependencies
     }
 
-    func action(with country: Country) -> FlowAction<Result> {
+    func action(with country: Input) -> FlowAction<Output> {
         return FlowAction { completion in
             dependencies.navigator.forward(to: .amount(country: country,
                                                        completion: { amount in

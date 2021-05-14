@@ -6,15 +6,16 @@ protocol ShowConfirmationNodeDependencies {
 }
 
 struct ShowConfirmationNode: FlowNode {
+    typealias Input = TemporaryTransferWithTariff
+    typealias Output = (result: ConfirmationResult, transfer: TemporaryTransferWithTariff)
+
     private let dependencies: ShowConfirmationNodeDependencies
 
     init(_ dependencies: ShowConfirmationNodeDependencies) {
         self.dependencies = dependencies
     }
 
-    func action(with transfer: TemporaryTransferWithTariff)
-        -> FlowAction<(result: ConfirmationResult, transfer: TemporaryTransferWithTariff)> {
-
+    func action(with transfer: Input) -> FlowAction<Output> {
         return FlowAction { completion in
             dependencies.navigator.forward(to: .confirmation(loadingPublisher: dependencies.state.loading,
                                                              country: transfer.country,

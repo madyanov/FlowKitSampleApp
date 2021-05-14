@@ -5,13 +5,16 @@ protocol ShowInvalidAmountDependencies {
 }
 
 struct ShowInvalidAmountNode: FlowNode {
+    typealias Input = Void
+    typealias Output = ShowAmountNode.Result
+
     private let dependencies: ShowInvalidAmountDependencies
 
     init(_ dependencies: ShowInvalidAmountDependencies) {
         self.dependencies = dependencies
     }
 
-    func action(with result: ShowAmountNode.Result) -> FlowAction<ShowAmountNode.Result> {
+    func action(with: Input) -> FlowAction<Output> {
         return FlowAction { _ in
             dependencies.navigator.forward(to: .invalidAmount)
         }

@@ -6,13 +6,16 @@ protocol CreateTransferNodeDependencies {
 }
 
 struct CreateTransferNode: FlowNode {
+    typealias Input = TemporaryTransferWithTariff
+    typealias Output = Transfer
+
     private let dependencies: CreateTransferNodeDependencies
 
     init(_ dependencies: CreateTransferNodeDependencies) {
         self.dependencies = dependencies
     }
 
-    func action(with transfer: TemporaryTransferWithTariff) -> FlowAction<Transfer> {
+    func action(with transfer: Input) -> FlowAction<Output> {
         return FlowAction { completion in
             dependencies.state.loading.value = true
 

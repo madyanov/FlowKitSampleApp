@@ -1,13 +1,13 @@
 struct InlineFlowNode<Input, Output> {
-    private let transform: (FlowAction<Input>) -> FlowAction<Output>
+    private let builder: (FlowAction<Input>) -> FlowAction<Output>
 
-    init(transform: @escaping (FlowAction<Input>) -> FlowAction<Output>) {
-        self.transform = transform
+    init(builder: @escaping (FlowAction<Input>) -> FlowAction<Output>) {
+        self.builder = builder
     }
 }
 
 extension InlineFlowNode: FlowNode {
     func action(with input: Input) -> FlowAction<Output> {
-        return transform(initialize(with: input))
+        return builder(initialize(with: input))
     }
 }

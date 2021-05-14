@@ -6,13 +6,16 @@ protocol ShowTariffsNodeDependencies {
 }
 
 struct ShowTariffsNode: FlowNode {
+    typealias Input = TemporaryTransferWithAmount
+    typealias Output = TemporaryTransferWithTariff
+
     private let dependencies: ShowTariffsNodeDependencies
 
     init(_ dependencies: ShowTariffsNodeDependencies) {
         self.dependencies = dependencies
     }
 
-    func action(with transfer: TemporaryTransferWithAmount) -> FlowAction<TemporaryTransferWithTariff> {
+    func action(with transfer: Input) -> FlowAction<Output> {
         return FlowAction { completion in
             dependencies.navigator.forward(to: .tariffs(tariffPublisher: dependencies.state.tariff,
                                                         completion: {

@@ -1,4 +1,7 @@
 public final class CancellableFlowNode<Node: FlowNode>: FlowNode {
+    public typealias Input = Node.Input
+    public typealias Output = Node.Output
+
     private let node: Node
     private let contextProvider: ContextProvider
 
@@ -7,7 +10,7 @@ public final class CancellableFlowNode<Node: FlowNode>: FlowNode {
         self.contextProvider = contextProvider
     }
 
-    public func action(with input: Node.Input) -> FlowAction<Node.Output> {
+    public func action(with input: Input) -> FlowAction<Output> {
         weak var context = contextProvider.context.value
 
         return FlowAction { [weak self] completion in
