@@ -1,4 +1,4 @@
-struct PassthroughTransformer<Value>: ValueTransformer {
+struct PassthroughTransformer<Value>: InputTransformer {
     typealias Input = Value
     typealias Output = Value
 

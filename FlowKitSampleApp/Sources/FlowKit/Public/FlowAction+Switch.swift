@@ -1,7 +1,7 @@
 extension FlowAction {
     public func `switch`<NewOutput,
                          Node: FlowNode,
-                         Transformer: ValueTransformer>(_ node: Node,
+                         Transformer: InputTransformer>(_ node: Node,
                                                         transformer: Transformer,
                                                         builder: @escaping (Switch<Transformer.Output, Node.Output, NewOutput>)
                                                             -> FlowAction<NewOutput>)

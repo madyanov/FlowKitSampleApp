@@ -1,6 +1,6 @@
 import FlowKit
 
-struct TransformAmountResultToValidity: ValueTransformer {
+struct TransformAmountResultToValidity: InputTransformer {
     typealias Input = ShowAmountNode.Result
     typealias Output = Result
 
