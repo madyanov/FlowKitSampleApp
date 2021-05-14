@@ -41,17 +41,17 @@ final class FirstViewController: UIViewController {
 
 private extension FirstViewController {
     @objc
-    func didTapRussiaButton() {
+    private func didTapRussiaButton() {
         tapRussiaButtonHandler?()
     }
 
     @objc
-    func didTapGermanyButton() {
+    private func didTapGermanyButton() {
         tapGermanyButtonHandler?()
     }
 
     @objc
-    func didTapFranceButton() {
+    private func didTapFranceButton() {
         tapFranceButtonHandler?()
     }
 }

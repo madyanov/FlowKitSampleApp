@@ -33,9 +33,9 @@ extension FlowAction {
         }
     }
 
-    public func `switch`<NewOutput, Node: FlowNode>(_ node: Node,
-                                                    builder: @escaping (Switch<Output, Node.Output, NewOutput>)
-                                                        -> FlowAction<NewOutput>)
+    public func `switch`<NewOutput,
+                         Node: FlowNode>(_ node: Node,
+                                         builder: @escaping (Switch<Output, Node.Output, NewOutput>) -> FlowAction<NewOutput>)
         -> FlowAction<NewOutput> where Node.Input == Output {
 
         return `switch`(node, transformer: PassthroughTransformer<Output>(), builder: builder)

@@ -101,17 +101,17 @@ final class ConfirmationViewController: UIViewController {
 
 private extension ConfirmationViewController {
     @objc
-    func didTapEditAmountButton() {
+    private func didTapEditAmountButton() {
         completion(.editAmount)
     }
 
     @objc
-    func didTapEditTariffButton() {
+    private func didTapEditTariffButton() {
         completion(.editTariff)
     }
 
     @objc
-    func didTapContinueButton() {
+    private func didTapContinueButton() {
         completion(.continue)
     }
 }

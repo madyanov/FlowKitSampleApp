@@ -33,7 +33,7 @@ public final class Publisher<Output> {
 }
 
 private extension Publisher {
-    func notify(_ subscriber: (Output) -> Void) {
+    private func notify(_ subscriber: (Output) -> Void) {
         value.map { subscriber($0) }
     }
 }
