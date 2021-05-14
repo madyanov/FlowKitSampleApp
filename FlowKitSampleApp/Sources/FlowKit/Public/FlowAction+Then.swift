@@ -7,6 +7,7 @@ extension FlowAction {
         return void().privateThen(node)
     }
 
+    // workaround to solve void -> void ambiguity
     public func then<Node: FlowNode>(_ node: Node) -> FlowAction<Node.Output> where Output == Void, Node.Input == Void {
         return void().privateThen(node)
     }
