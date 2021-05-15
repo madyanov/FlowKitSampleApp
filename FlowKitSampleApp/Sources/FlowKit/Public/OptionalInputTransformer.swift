@@ -8,4 +8,10 @@ extension OptionalInputTransformer {
             compactMap(input: input).map { completion(.success($0)) }
         }
     }
+
+    public func optionalAction(with input: Input) -> FlowAction<Output?> {
+        return FlowAction { completion in
+            completion(.success(compactMap(input: input)))
+        }
+    }
 }
