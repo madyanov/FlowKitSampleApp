@@ -20,7 +20,7 @@
 
 - [`FlowAction`](FlowKitSampleApp/Sources/FlowKit/Public/FlowAction+Then.swift) – обычные [промисы](https://en.wikipedia.org/wiki/Futures_and_promises), принимающие `FlowNode` в качестве шагов.
 
-- [`FlowNode`](FlowKitSampleApp/Sources/FlowKit/Public/FlowNode.swift) и [`OptionalFlowNode`](FlowKitSampleApp/Sources/FlowKit/Public/OptionalFlowNode.swift) – абстракции, подобные `(Input) -> FlowAction<Output>`, дающие возможность строить цепочки, где `Input` предыдущего шага связан с `Output`-ом следующего. Используются для реализации *асинхронной* логики шагов. Должны быть атомарны.
+- [`FlowNode`](FlowKitSampleApp/Sources/FlowKit/Public/FlowNode.swift) – абстракция, подобная `(Input) -> FlowAction<Output>`, дающая возможность строить цепочки, где `Input` предыдущего шага связан с `Output`-ом следующего. Используется для реализации *асинхронной* логики шагов. Должны быть атомарны.
 
 - [`InputTransformer`](FlowKitSampleApp/Sources/FlowKit/Public/InputTransformer.swift) и [`OptionalInputTransformer`](FlowKitSampleApp/Sources/FlowKit/Public/OptionalInputTransformer.swift) – абстракции над `FlowNode`, используемые для реализации *синхронной* логики шагов. Например, для тансформация одного значения в другое. Должны быть атомарны.
 

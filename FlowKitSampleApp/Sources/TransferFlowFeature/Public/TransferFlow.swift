@@ -20,9 +20,9 @@ public struct TransferFlow: FlowNode {
                     .when({ $0 == .invalid }, then: ShowInvalidAmountNode(dependencies))
                     .continue()
                 }
-                .switch { $0
-                    .when(TransformAmountResultToTransferWithAmount(), then: ShowTariffsNode(dependencies))
-                    .default(TransformAmountResultToTransferWithTariff())
+                .then(TransformAmountResultToTransferWithTariff()) { $0
+                    .then(TransformAmountResultToTransferWithAmount())
+                    .then(ShowTariffsNode(dependencies))
                 }
                 .then(ShowConfirmationNode(dependencies))
                 .switch(TransformConfirmationResultToStep(),

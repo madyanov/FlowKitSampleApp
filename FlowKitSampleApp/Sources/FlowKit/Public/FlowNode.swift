@@ -1,11 +1,6 @@
-public protocol FlowNode: OptionalFlowNode {
-    func action(with: Input) -> FlowAction<Output>
-}
+public protocol FlowNode {
+    associatedtype Input
+    associatedtype Output
 
-extension FlowNode {
-    public func action(with input: Input) -> FlowAction<Output?> {
-        return FlowAction { completion in
-            action(with: input).complete(using: completion)
-        }
-    }
+    func action(with: Input) -> FlowAction<Output>
 }
