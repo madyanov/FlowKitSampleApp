@@ -1,4 +1,6 @@
-Пример использования [библиотеки](FlowKitSampleApp/Sources/FlowKit) для координации флоу.
+## DEPRECATED
+
+See https://github.com/madyanov/FlowKit
 
 ## Цель
 
